@@ -1,11 +1,6 @@
 import { createElement, type ReactNode } from "react";
 import { LoginPage, ParkingListPage } from "../pages";
-
-enum Paths {
-  DEFAULT = "/",
-  LOGIN = "/login",
-  PARKING_LIST = "/parking-list",
-}
+import { Paths } from "./paths";
 
 type Route = {
   path: Paths;

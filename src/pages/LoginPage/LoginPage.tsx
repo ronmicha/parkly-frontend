@@ -1,17 +1,22 @@
 import { SignUpForm, type SignUpFormData } from "../../components";
 import { useCreateUser } from "../../api";
+import { useNavigate } from "react-router-dom";
+import { Paths } from "../../navigation";
 
 export const LoginPage = () => {
-  const { mutate: createUser } = useCreateUser();
+  const navigate = useNavigate();
+
+  const { mutate: createUser } = useCreateUser({
+    onSuccess: () => {
+      navigate(Paths.PARKING_LIST);
+    },
+  });
 
   const handleSignUp = (
     data: SignUpFormData,
     activeVehicleId: string
   ): void => {
-    createUser({
-      ...data,
-      activeVehicleId,
-    });
+    createUser({ ...data, activeVehicleId });
   };
 
   return (
