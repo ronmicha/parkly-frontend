@@ -1,0 +1,55 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "standard-with-typescript",
+  ],
+  overrides: [],
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json"],
+  },
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint", "react", "react-hooks"],
+  rules: {
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/comma-dangle": ["error", "only-multiline"],
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/indent": [
+      "error",
+      2,
+      { FunctionDeclaration: { parameters: "off" } },
+    ],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        allowTypedFunctionExpressions: false,
+        allowFunctionsWithoutTypeParameters: true,
+      },
+    ],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      { singleline: { delimiter: "semi", requireLast: false } },
+    ],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/quotes": ["error", "double", { avoidEscape: true }],
+    "@typescript-eslint/prefer-ts-expect-error": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/semi": ["error", "always"],
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+  },
+};
