@@ -1,5 +1,5 @@
 import { createElement, type ReactNode } from "react";
-import { LoginPage, ParkingList } from "../pages";
+import { LoginPage, ParkingListPage } from "../pages";
 
 enum Paths {
   DEFAULT = "/",
@@ -15,5 +15,5 @@ type Route = {
 export const routes: Route[] = [
   { path: Paths.DEFAULT, element: createElement(LoginPage) },
   { path: Paths.LOGIN, element: createElement(LoginPage) },
-  { path: Paths.PARKING_LIST, element: createElement(ParkingList) },
+  { path: Paths.PARKING_LIST, element: createElement(ParkingListPage) },
 ];
