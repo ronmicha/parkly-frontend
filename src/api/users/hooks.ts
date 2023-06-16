@@ -17,6 +17,7 @@ const transformGetUserResponse = (
     first_name,
     last_name,
     phone_number,
+    email,
     customer_id,
     active_vehicle_id,
   } = response.userData;
@@ -27,6 +28,7 @@ const transformGetUserResponse = (
       firstName: first_name,
       lastName: last_name,
       phoneNumber: phone_number,
+      email,
       customerId: customer_id,
       vehicleId: active_vehicle_id,
     },

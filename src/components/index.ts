@@ -1,2 +1,3 @@
 export * from "./CustomerParkingArea";
-export * from "./ParkingSlotList/ParkingSlotList";
+export * from "./ParkingSlotList";
+export * from "./SignUpForm";

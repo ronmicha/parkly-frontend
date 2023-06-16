@@ -1,6 +1,6 @@
-import { type ParkingSlot, useGetParkingSlots } from "../api";
+import { type ParkingSlot, useGetParkingSlots } from "../../api";
 import { useMemo } from "react";
-import { ParkingSlotList } from "./ParkingSlotList/ParkingSlotList";
+import { ParkingSlotList } from "../ParkingSlotList";
 
 type CustomerParkingAreaProps = {
   parkingAreaId: string;

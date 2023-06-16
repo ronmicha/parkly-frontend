@@ -2,6 +2,7 @@ type UserData = Pick<GetUser.UserData_Server, "id"> & {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  email: string;
   customerId: string;
   vehicleId: string;
 };
@@ -12,6 +13,7 @@ export declare namespace GetUser {
     first_name: string;
     last_name: string;
     phone_number: string;
+    email: string;
     customer_id: string;
     active_vehicle_id: string;
   };

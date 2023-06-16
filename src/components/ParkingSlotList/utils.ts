@@ -1,7 +1,8 @@
+import { createElement } from "react";
 import { type ListItemProps } from "../../design-system/components";
 import { type ParkingSlot } from "../../api";
-import { sortBy } from "../../packages/utils";
 import { ListRow } from "./ListRow";
+import { sortBy } from "../../packages/utils";
 
 type ListData = ListItemProps[];
 
@@ -31,7 +32,7 @@ const convertObjToListData = (
     const item: ListItemProps = {
       text: `Floor ${floor}`,
       items: slots.map((slot) => ({
-        text: <ListRow slot={slot} />,
+        text: createElement(ListRow, { slot }),
         onClick: () => {
           onRowClick(slot.id, slot.vehicleId);
         },
