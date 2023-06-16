@@ -1,27 +1,36 @@
-import { type ChangeEvent, type FormEvent, useState } from "react";
+import { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 
-export type FormData = {
+export type SignUpFormData = {
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email: string;
+  password: string;
   vehicleIds: string[];
 };
 
-const initialFormData: FormData = {
+const initialFormData: SignUpFormData = {
   firstName: "",
   lastName: "",
   phoneNumber: "",
   email: "",
+  password: "",
   vehicleIds: [],
 };
 
 type SignUpFormProps = {
-  onSubmit: (formData: FormData) => void;
+  onSubmit: (formData: SignUpFormData, activeVehicleId: string) => void;
 };
 
 export const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formData, setFormData] = useState<SignUpFormData>(initialFormData);
+  const [activeVehicleId, setActiveVehicleId] = useState<string>("");
+
+  useEffect(() => {
+    if (formData.vehicleIds.length === 1) {
+      setActiveVehicleId(formData.vehicleIds[0]);
+    }
+  }, [formData.vehicleIds]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
@@ -32,7 +41,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    onSubmit(formData);
+    onSubmit(formData, activeVehicleId);
     event.preventDefault();
   };
 
@@ -63,9 +72,10 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
         onChange={handleInputChange}
       />
       <input
-        name={"vehicleIds"}
-        placeholder={"Vehicle IDs"}
-        value={formData.vehicleIds}
+        name={"password"}
+        placeholder={"Password"}
+        type={"password"}
+        value={formData.password}
         onChange={handleInputChange}
       />
       <input type="submit" value="Submit" />

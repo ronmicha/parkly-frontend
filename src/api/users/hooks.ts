@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
+  useMutation,
+  type UseMutationOptions,
+  type UseMutationResult,
   useQuery,
   useQueryClient,
   type UseQueryOptions,
   type UseQueryResult,
 } from "@tanstack/react-query";
 import { QueryKeys } from "../common";
-import { getUser } from "./api";
-import { type GetUser } from "./types";
+import { createUser, getUser } from "./api";
+import { type CreateUserPayload, type GetUser } from "./types";
 
 const transformGetUserResponse = (
   response: GetUser.Response_Server
@@ -18,6 +21,7 @@ const transformGetUserResponse = (
     last_name,
     phone_number,
     email,
+    password,
     customer_id,
     active_vehicle_id,
   } = response.userData;
@@ -29,10 +33,17 @@ const transformGetUserResponse = (
       lastName: last_name,
       phoneNumber: phone_number,
       email,
+      password,
       customerId: customer_id,
-      vehicleId: active_vehicle_id,
+      activeVehicleId: active_vehicle_id,
     },
   };
+};
+
+export const useCreateUser = (
+  options?: UseMutationOptions<unknown, unknown, CreateUserPayload>
+): UseMutationResult<unknown, unknown, CreateUserPayload> => {
+  return useMutation(createUser, options);
 };
 
 export const useGetUser = (

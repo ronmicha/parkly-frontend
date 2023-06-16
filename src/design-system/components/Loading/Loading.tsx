@@ -1,4 +1,4 @@
-import {CircularProgress, type CircularProgressProps} from "@mui/material";
+import { CircularProgress, type CircularProgressProps } from "@mui/material";
 
 type LoadingProps = CircularProgressProps & {
   testId?: string;
@@ -10,7 +10,7 @@ const Loading = ({
   value,
   className,
   size,
-  testId
+  testId,
 }: LoadingProps): JSX.Element => {
   return (
     <CircularProgress

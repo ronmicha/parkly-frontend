@@ -1,14 +1,22 @@
-import { type FormData, SignUpForm } from "../../components";
+import { SignUpForm, type SignUpFormData } from "../../components";
+import { useCreateUser } from "../../api";
 
 export const LoginPage = () => {
-  const handleSubmit = (data: FormData): void => {
-    // send request with data
-    alert(JSON.stringify(data, null, 2));
+  const { mutate: createUser } = useCreateUser();
+
+  const handleSignUp = (
+    data: SignUpFormData,
+    activeVehicleId: string
+  ): void => {
+    createUser({
+      ...data,
+      activeVehicleId,
+    });
   };
 
   return (
     <>
-      <SignUpForm onSubmit={handleSubmit} />
+      <SignUpForm onSubmit={handleSignUp} />
     </>
   );
 };

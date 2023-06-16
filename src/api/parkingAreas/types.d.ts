@@ -1,6 +1,6 @@
 type ParkingArea = Omit<
-  GetCustomerParkingAreas.ParkingArea_Server,
-  "street_address"
+GetCustomerParkingAreas.ParkingArea_Server,
+"street_address"
 > & {
   streetAddress: string;
 };

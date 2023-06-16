@@ -1,5 +1,6 @@
 import { ApiEndpoints, apiService } from "../common";
 import { type GetParkingSlots, type UpdateSlotStatusPayload } from "./types";
+import { type AxiosResponse } from "axios";
 
 export const getParkingSlots = async (
   parkingAreaId: string
@@ -7,10 +8,9 @@ export const getParkingSlots = async (
   const params: GetParkingSlots.Params = {
     parkingAreaId,
   };
-  const response = await apiService.get<GetParkingSlots.Response_Server>(
-    ApiEndpoints.PARKING_SLOTS,
-    { params }
-  );
+  const response: AxiosResponse<GetParkingSlots.Response_Server> =
+    await apiService.get(ApiEndpoints.PARKING_SLOTS, { params });
+
   return response.data;
 };
 
