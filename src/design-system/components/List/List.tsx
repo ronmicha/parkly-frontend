@@ -11,10 +11,10 @@ export type ListProps = {
 
 export const List = ({ data, subheader }: ListProps): JSX.Element => {
   const SubheaderComponent = subheader
-    ? (
-      <MuiListSubheader component="div">{subheader}</MuiListSubheader>
-    )
-    : null;
+? (
+    <MuiListSubheader component="div">{subheader}</MuiListSubheader>
+  )
+: null;
 
   return (
     <MuiList
