@@ -2,7 +2,7 @@ import { useGetCustomerParkingAreas, useGetUser } from "../../api";
 import { CustomerParkingArea } from "../../components";
 
 export const ParkingListPage = () => {
-  const { data: getUserResponse } = useGetUser({});
+  const { data: getUserResponse } = useGetUser();
 
   const { data: getParkingAreasResponse } = useGetCustomerParkingAreas(
     { customerId: getUserResponse?.userData.customerId ?? "" },

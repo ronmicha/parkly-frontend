@@ -39,16 +39,17 @@ export const useGetParkingSlots = (
 };
 
 export const useUpdateSlotStatus = (
-  options?: UseMutationOptions<unknown, unknown, UpdateSlotStatusPayload>
+  options: UseMutationOptions<unknown, unknown, UpdateSlotStatusPayload> = {}
 ): UseMutationResult<unknown, unknown, UpdateSlotStatusPayload> => {
   const queryClient = useQueryClient();
 
-  return useMutation(updateSlotStatus, {
+  return useMutation<unknown, unknown, UpdateSlotStatusPayload>({
+    mutationFn: updateSlotStatus,
     ...options,
-    onSuccess: (data, variables) => {
+    onSuccess: (data, variables, context) => {
       const cache = queryClient.getQueryCache();
-      const parkingSlotsKey = cache.findAll(["parking_slots"])[0].queryKey;
-      queryClient.setQueryData(parkingSlotsKey, (prevData) => {
+      const { queryKey } = cache.findAll([QueryKeys.PARKING_SLOTS])[0];
+      queryClient.setQueryData(queryKey, (prevData) => {
         const updatedData: GetParkingSlots.Response_Server = JSON.parse(
           JSON.stringify(prevData)
         );
@@ -58,6 +59,7 @@ export const useUpdateSlotStatus = (
         updatedSlot!.vehicle_id = variables.vehicleId;
         return updatedData;
       });
+      options.onSuccess?.(data, variables, context);
     },
   });
 };

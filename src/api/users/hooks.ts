@@ -4,7 +4,6 @@ import {
   type UseMutationOptions,
   type UseMutationResult,
   useQuery,
-  useQueryClient,
   type UseQueryOptions,
   type UseQueryResult,
 } from "@tanstack/react-query";
@@ -41,20 +40,28 @@ const transformGetUserResponse = (
 };
 
 export const useCreateUser = (
-  options?: UseMutationOptions<unknown, unknown, CreateUserPayload>
-): UseMutationResult<unknown, unknown, CreateUserPayload> => {
-  return useMutation(createUser, options);
+  options: UseMutationOptions<
+    GetUser.Response_Server,
+    unknown,
+    CreateUserPayload
+  > = {}
+): UseMutationResult => {
+  return useMutation<GetUser.Response_Server, unknown, CreateUserPayload>({
+    mutationFn: createUser,
+    ...options,
+    onSuccess: (data, variables, context) => {
+      options?.onSuccess?.(data, variables, context);
+    },
+  });
 };
 
 export const useGetUser = (
   options: UseQueryOptions = {}
 ): UseQueryResult<GetUser.Response> => {
-  const queryClient = useQueryClient();
   const queryKey = [QueryKeys.USER_DATA];
 
   return useQuery<unknown, unknown, GetUser.Response>(queryKey, getUser, {
     ...options,
     select: transformGetUserResponse,
-    initialData: () => queryClient.getQueryData<GetUser.Response>(queryKey),
   });
 };

@@ -8,14 +8,14 @@ type ParkingSlotListProps = {
 };
 
 export const ParkingSlotList = ({ parkingSlots }: ParkingSlotListProps) => {
-  const { data: getUserResponse } = useGetUser({});
+  const { data: getUserResponse } = useGetUser();
   const { mutate: updateSlotStatus } = useUpdateSlotStatus({});
 
   const handleSlotClick = useCallback(
     (slotId: string, existingVehicleId: string | null): void => {
       const vehicleId = existingVehicleId
         ? null
-        : getUserResponse!.userData.vehicleId;
+        : getUserResponse!.userData.activeVehicleId;
       updateSlotStatus({ slotId, vehicleId });
     },
     []
