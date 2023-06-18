@@ -45,7 +45,7 @@ export const useCreateUser = (
     unknown,
     CreateUserPayload
   > = {}
-): UseMutationResult => {
+): UseMutationResult<GetUser.Response_Server, unknown, CreateUserPayload> => {
   return useMutation<GetUser.Response_Server, unknown, CreateUserPayload>({
     ...options,
     mutationFn: createUser,

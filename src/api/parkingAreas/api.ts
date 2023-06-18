@@ -9,7 +9,7 @@ export const getCustomerParkingAreas = async (
     customerId,
   };
   const response: AxiosResponse<GetCustomerParkingAreas.Response_Server> =
-    await apiService.get(ApiEndpoints.CUSTOMER_PARKING_AREAS, { params });
+    await apiService.get(ApiEndpoints.PARKING_AREAS, { params });
 
   return response.data;
 };
