@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { addResponseMiddleware } from "../api/service";
-import { Paths } from "../navigation";
+import { Paths } from "./paths";
 
-export const useLogoutRedirect = () => {
+export const UnAuthRedirect = (): JSX.Element => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,4 +13,6 @@ export const useLogoutRedirect = () => {
       }
     });
   }, [navigate]);
+
+  return <></>;
 };
