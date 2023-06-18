@@ -1,4 +1,8 @@
-import { type ParkingSlot, useGetUser, useUpdateSlotStatus } from "../../api";
+import {
+  type ParkingSlot,
+  useGetUser,
+  useUpdateSlotStatus,
+} from "../../api/domains";
 import { List } from "../../design-system/components";
 import { convertSlotsToListData } from "./utils";
 import { useCallback, useMemo } from "react";

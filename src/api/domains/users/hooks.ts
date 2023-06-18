@@ -7,7 +7,7 @@ import {
   type UseQueryOptions,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import { QueryKeys } from "../common";
+import { QueryKeys } from "../../queryClient";
 import { createUser, getUser } from "./api";
 import { type CreateUserPayload, type GetUser } from "./types";
 

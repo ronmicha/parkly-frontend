@@ -7,7 +7,7 @@ import {
   type UseQueryOptions,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import { QueryKeys } from "../common";
+import { QueryKeys } from "../../queryClient";
 import { getParkingSlots, updateSlotStatus } from "./api";
 import { type GetParkingSlots, type UpdateSlotStatusPayload } from "./types";
 

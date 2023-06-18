@@ -1,4 +1,4 @@
-import { type ParkingSlot, useGetParkingSlots } from "../../api";
+import { type ParkingSlot, useGetParkingSlots } from "../../api/domains";
 import { useMemo } from "react";
 import { ParkingSlotList } from "../ParkingSlotList";
 

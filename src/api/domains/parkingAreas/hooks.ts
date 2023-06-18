@@ -3,7 +3,7 @@ import {
   type UseQueryOptions,
   type UseQueryResult,
 } from "@tanstack/react-query";
-import { QueryKeys } from "../common";
+import { QueryKeys } from "../../queryClient";
 import { getCustomerParkingAreas } from "./api";
 import { type GetCustomerParkingAreas } from "./types";
 
@@ -27,7 +27,7 @@ export const useGetCustomerParkingAreas = (
   const { customerId } = params;
 
   return useQuery(
-    [QueryKeys.CUSTOMER_PARKING_AREAS, customerId],
+    [QueryKeys.PARKING_AREAS, customerId],
     async () => await getCustomerParkingAreas(customerId),
     { ...options, select: transformGetCustomerParkingAreasResponse }
   );

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { addHeaders, useCreateUser } from "../../api";
+import { useCreateUser } from "../../api/domains";
+import { addHeaders } from "../../api/service";
 import { SignUpForm, type SignUpFormData } from "../../components";
 import { Paths } from "../../navigation";
 

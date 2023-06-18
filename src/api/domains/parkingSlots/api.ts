@@ -1,4 +1,4 @@
-import { ApiEndpoints, apiService } from "../common";
+import { ApiEndpoints, apiService } from "../../service";
 import { type GetParkingSlots, type UpdateSlotStatusPayload } from "./types";
 import { type AxiosResponse } from "axios";
 

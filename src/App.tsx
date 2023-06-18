@@ -1,4 +1,4 @@
-import { QueryClientProvider } from "./api";
+import { QueryClientProvider } from "./api/queryClient";
 import { AppRouter } from "./navigation";
 
 const App = () => {

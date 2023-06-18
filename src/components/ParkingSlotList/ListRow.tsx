@@ -1,4 +1,4 @@
-import { type ParkingSlot } from "../../api";
+import { type ParkingSlot } from "../../api/domains";
 
 type SlotProps = {
   slot: ParkingSlot;

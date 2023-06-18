@@ -1,4 +1,4 @@
-import { useGetCustomerParkingAreas, useGetUser } from "../../api";
+import { useGetCustomerParkingAreas, useGetUser } from "../../api/domains";
 import { CustomerParkingArea } from "../../components";
 
 export const ParkingListPage = () => {

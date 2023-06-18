@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const addHeaders = (headers: Record<string, string>): void => {
   instance.interceptors.request.use((config) => {
-    config.headers = { ...config.headers, ...headers };
+    config.headers.set(headers);
     return config;
   });
 };

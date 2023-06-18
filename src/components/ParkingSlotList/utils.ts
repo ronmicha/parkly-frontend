@@ -1,6 +1,6 @@
 import { createElement } from "react";
 import { type ListItemProps } from "../../design-system/components";
-import { type ParkingSlot } from "../../api";
+import { type ParkingSlot } from "../../api/domains";
 import { ListRow } from "./ListRow";
 import { sortBy } from "../../packages/utils";
 
