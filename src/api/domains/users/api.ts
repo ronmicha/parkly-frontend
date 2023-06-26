@@ -1,11 +1,11 @@
-import { ApiEndpoints, apiService, type ApiResponse } from "../../service";
+import { ApiEndpoints, type ApiResponse, apiService } from "../../service";
 import { type CreateUserPayload, type GetUser } from "./types";
 
 export const createUser = async (
   data: CreateUserPayload
 ): Promise<GetUser.Response_Server> => {
   const response: ApiResponse<GetUser.Response_Server> = await apiService.post(
-    ApiEndpoints.CREATE_USER,
+    ApiEndpoints.SIGNUP,
     data
   );
 

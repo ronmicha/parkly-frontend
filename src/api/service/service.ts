@@ -5,6 +5,7 @@ const { VITE_API_BASE_URL } = process.env;
 
 const instance = axios.create({
   baseURL: VITE_API_BASE_URL,
+  withCredentials: true,
 });
 
 export const addHeaders = (headers: Record<string, string>): void => {
