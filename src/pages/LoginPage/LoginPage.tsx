@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useCreateUser } from "../../api/domains";
-import { SignUpForm, type SignUpFormData } from "../../components";
+import { LoginForm, type LoginFormData } from "../../components";
 import { Paths } from "../../navigation";
 
 export const LoginPage = () => {
@@ -12,16 +12,13 @@ export const LoginPage = () => {
     },
   });
 
-  const handleSignUp = (
-    data: SignUpFormData,
-    activeVehicleId: string
-  ): void => {
-    createUser({ ...data, activeVehicleId });
+  const handleLogin = (data: LoginFormData): void => {
+    debugger;
   };
 
   return (
     <>
-      <SignUpForm onSubmit={handleSignUp} />
+      <LoginForm onSubmit={handleLogin} />
     </>
   );
 };

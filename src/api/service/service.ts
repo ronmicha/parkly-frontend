@@ -8,13 +8,6 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const addHeaders = (headers: Record<string, string>): void => {
-  instance.interceptors.request.use((config) => {
-    config.headers.set(headers);
-    return config;
-  });
-};
-
 export const addResponseMiddleware = (middleware: ResponseMiddleware): void => {
   instance.interceptors.response.use((config) => {
     middleware(config);
