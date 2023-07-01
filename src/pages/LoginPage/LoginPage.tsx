@@ -1,19 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { useCreateUser } from "../../api/domains";
+import { useLogin } from "../../api/domains";
 import { LoginForm, type LoginFormData } from "../../components";
 import { Paths } from "../../navigation";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
 
-  const { mutate: createUser } = useCreateUser({
+  const { mutate: login } = useLogin({
     onSuccess: () => {
       navigate(Paths.PARKING_LIST);
     },
   });
 
-  const handleLogin = (data: LoginFormData): void => {
-    debugger;
+  const handleLogin = ({ phoneNumber, password }: LoginFormData): void => {
+    login({ phoneNumber, password });
   };
 
   return (

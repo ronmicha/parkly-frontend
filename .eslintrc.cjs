@@ -21,7 +21,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "react", "react-hooks"],
   rules: {
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
+    "@typescript-eslint/comma-dangle": ["error", "only-multiline"],
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/explicit-function-return-type": [

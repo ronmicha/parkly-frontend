@@ -1,4 +1,16 @@
-type UserDataWithoutId = {
+export declare namespace Login {
+  type Payload = {
+    phoneNumber: string;
+    password: string;
+  };
+
+  type Response_Server = GetUser.Response_Server;
+
+  type Response = GetUser.Response;
+}
+
+type UserData = {
+  id: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -8,11 +20,9 @@ type UserDataWithoutId = {
   activeVehicleId: string;
 };
 
-type CreateUserPayload = Omit<UserDataWithoutId, "customerId"> & {
+export type CreateUserPayload = Omit<UserData, "id"> & {
   vehicleIds: string[];
 };
-
-type UserData = Pick<GetUser.UserData_Server, "id"> & UserDataWithoutId;
 
 export declare namespace GetUser {
   type UserData_Server = {

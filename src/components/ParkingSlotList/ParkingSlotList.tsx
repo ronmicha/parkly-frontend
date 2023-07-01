@@ -1,6 +1,6 @@
 import {
   type ParkingSlot,
-  useGetUser,
+  useGetProfile,
   useUpdateSlotStatus,
 } from "../../api/domains";
 import { List } from "../../design-system/components";
@@ -12,14 +12,14 @@ type ParkingSlotListProps = {
 };
 
 export const ParkingSlotList = ({ parkingSlots }: ParkingSlotListProps) => {
-  const { data: getUserResponse } = useGetUser();
+  const { data: getProfileResponse } = useGetProfile();
   const { mutate: updateSlotStatus } = useUpdateSlotStatus({});
 
   const handleSlotClick = useCallback(
     (slotId: string, existingVehicleId: string | null): void => {
       const vehicleId = existingVehicleId
         ? null
-        : getUserResponse!.userData.activeVehicleId;
+        : getProfileResponse!.userData.activeVehicleId;
       updateSlotStatus({ slotId, vehicleId });
     },
     []

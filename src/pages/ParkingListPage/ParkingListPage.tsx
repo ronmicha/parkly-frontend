@@ -1,12 +1,12 @@
-import { useGetCustomerParkingAreas, useGetUser } from "../../api/domains";
+import { useGetCustomerParkingAreas, useGetProfile } from "../../api/domains";
 import { CustomerParkingArea } from "../../components";
 
 export const ParkingListPage = () => {
-  const { data: getUserResponse } = useGetUser();
+  const { data: getProfileResponse } = useGetProfile();
 
   const { data: getParkingAreasResponse } = useGetCustomerParkingAreas(
-    { customerId: getUserResponse?.userData.customerId ?? "" },
-    { enabled: Boolean(getUserResponse) }
+    { customerId: getProfileResponse?.userData.customerId ?? "" },
+    { enabled: Boolean(getProfileResponse) }
   );
 
   return (

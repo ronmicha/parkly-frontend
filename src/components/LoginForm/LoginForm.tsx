@@ -1,37 +1,17 @@
-import { type ChangeEvent, type FormEvent, useState } from "react";
+import { type FormEvent } from "react";
+import { useForm } from "../../hooks";
 
+type LoginFormProps = {
+  onSubmit: (formData: LoginFormData) => void;
+};
 export type LoginFormData = {
   phoneNumber: string;
   password: string;
 };
 
-type UseForm<T> = {
-  formData: T;
-  handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-};
-
-type LoginFormProps = {
-  onSubmit: (formData: LoginFormData) => void;
-};
-
 const initialFormData: LoginFormData = {
   phoneNumber: "",
   password: "",
-};
-
-// eslint-disable-next-line @typescript-eslint/comma-dangle
-const useForm = <T,>(initialFormData?: T): UseForm<T> => {
-  const [formData, setFormData] = useState<T>(initialFormData);
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  return { formData, handleInputChange };
 };
 
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {

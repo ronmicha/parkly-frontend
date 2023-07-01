@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import {
   useMutation,
   type UseMutationOptions,
@@ -8,58 +7,36 @@ import {
   type UseQueryResult,
 } from "@tanstack/react-query";
 import { QueryKeys } from "../../queryClient";
-import { createUser, getUser } from "./api";
-import { type CreateUserPayload, type GetUser } from "./types";
+import { createUser, getProfile, login, transformUserData } from "./api";
+import { type CreateUserPayload, type GetUser, type Login } from "./types";
 
-const transformGetUserResponse = (
-  response: GetUser.Response_Server
-): GetUser.Response => {
-  const {
-    id,
-    first_name,
-    last_name,
-    phone_number,
-    email,
-    password,
-    customer_id,
-    active_vehicle_id,
-  } = response.userData;
-
-  return {
-    userData: {
-      id,
-      firstName: first_name,
-      lastName: last_name,
-      phoneNumber: phone_number,
-      email,
-      password,
-      customerId: customer_id,
-      activeVehicleId: active_vehicle_id,
-    },
-  };
+export const useLogin = (
+  options: UseMutationOptions<Login.Response, unknown, Login.Payload>
+): UseMutationResult<Login.Response, unknown, Login.Payload> => {
+  return useMutation<Login.Response, unknown, Login.Payload>({
+    ...options,
+    mutationFn: login,
+    mutationKey: [QueryKeys.USER_DATA],
+  });
 };
 
 export const useCreateUser = (
-  options: UseMutationOptions<
-    GetUser.Response_Server,
-    unknown,
-    CreateUserPayload
-  > = {}
-): UseMutationResult<GetUser.Response_Server, unknown, CreateUserPayload> => {
-  return useMutation<GetUser.Response_Server, unknown, CreateUserPayload>({
+  options: UseMutationOptions<GetUser.Response, unknown, CreateUserPayload> = {}
+): UseMutationResult<GetUser.Response, unknown, CreateUserPayload> => {
+  return useMutation<GetUser.Response, unknown, CreateUserPayload>({
     ...options,
     mutationFn: createUser,
     mutationKey: [QueryKeys.USER_DATA],
   });
 };
 
-export const useGetUser = (
+export const useGetProfile = (
   options: UseQueryOptions = {}
 ): UseQueryResult<GetUser.Response> => {
   const queryKey = [QueryKeys.USER_DATA];
 
-  return useQuery<unknown, unknown, GetUser.Response>(queryKey, getUser, {
+  return useQuery<unknown, unknown, GetUser.Response>(queryKey, getProfile, {
     ...options,
-    select: transformGetUserResponse,
+    select: transformUserData,
   });
 };
