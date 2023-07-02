@@ -5,4 +5,5 @@ export enum ApiEndpoints {
   LOGIN = "/users/login",
   PROFILE = "/users/me",
   CREATE_USER = "/admin/create-user",
+  CUSTOMER_USERS = "/admin/users",
 }

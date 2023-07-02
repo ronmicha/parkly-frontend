@@ -11,11 +11,7 @@ export declare namespace Login {
   type Response = GetUser.Response;
 }
 
-type UserData = Camelize<GetUser.UserData_Server>;
-
-export type CreateUserPayload = Omit<UserData, "id"> & {
-  vehicleIds: string[];
-};
+export type UserData = Camelize<GetUser.UserData_Server>;
 
 export declare namespace GetUser {
   type UserData_Server = {
@@ -30,11 +26,11 @@ export declare namespace GetUser {
     active_vehicle_id: string;
   };
 
-  export type Response_Server = {
+  type Response_Server = {
     userData: UserData_Server;
   };
 
-  export type Response = {
+  type Response = {
     userData: UserData;
   };
 }

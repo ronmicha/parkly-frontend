@@ -22,11 +22,19 @@ const transformGetCustomerParkingAreasResponse = (
 
 export const useGetCustomerParkingAreas = (
   params: GetCustomerParkingAreas.Params,
-  options: UseQueryOptions = {}
+  options: UseQueryOptions<
+    GetCustomerParkingAreas.Response_Server,
+    unknown,
+    GetCustomerParkingAreas.Response
+  > = {}
 ): UseQueryResult<GetCustomerParkingAreas.Response> => {
   const { customerId } = params;
 
-  return useQuery(
+  return useQuery<
+    GetCustomerParkingAreas.Response_Server,
+    unknown,
+    GetCustomerParkingAreas.Response
+  >(
     [QueryKeys.PARKING_AREAS, customerId],
     async () => await getCustomerParkingAreas(customerId),
     { ...options, select: transformGetCustomerParkingAreasResponse }

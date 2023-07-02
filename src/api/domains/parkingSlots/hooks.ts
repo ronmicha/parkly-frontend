@@ -27,11 +27,19 @@ const transformGetParkingSlotsResponse = (
 
 export const useGetParkingSlots = (
   params: GetParkingSlots.Params,
-  options: UseQueryOptions = {}
+  options: UseQueryOptions<
+    GetParkingSlots.Response_Server,
+    unknown,
+    GetParkingSlots.Response
+  > = {}
 ): UseQueryResult<GetParkingSlots.Response> => {
   const { parkingAreaId } = params;
 
-  return useQuery<unknown, unknown, GetParkingSlots.Response>(
+  return useQuery<
+    GetParkingSlots.Response_Server,
+    unknown,
+    GetParkingSlots.Response
+  >(
     [QueryKeys.PARKING_SLOTS, parkingAreaId],
     async () => await getParkingSlots(parkingAreaId),
     { ...options, select: transformGetParkingSlotsResponse }
