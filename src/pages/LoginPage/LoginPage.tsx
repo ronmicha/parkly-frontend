@@ -8,7 +8,7 @@ export const LoginPage = () => {
 
   const { mutate: login } = useLogin({
     onSuccess: () => {
-      navigate(Paths.PARKING_LIST);
+      navigate(Paths.WELCOME);
     },
   });
 

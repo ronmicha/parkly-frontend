@@ -12,6 +12,7 @@ export const transformUserData = (
     phone_number,
     email,
     password,
+    role,
     customer_id,
     active_vehicle_id,
   } = response.userData;
@@ -24,6 +25,7 @@ export const transformUserData = (
       phoneNumber: phone_number,
       email,
       password,
+      role,
       customerId: customer_id,
       activeVehicleId: active_vehicle_id,
     },
@@ -52,7 +54,7 @@ export const createUser = async (
 
 export const getProfile = async (): Promise<GetUser.Response_Server> => {
   const response: ApiResponse<GetUser.Response_Server> = await apiService.get(
-    ApiEndpoints.GET_PROFILE
+    ApiEndpoints.PROFILE
   );
 
   return response.data;

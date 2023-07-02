@@ -1,3 +1,5 @@
+import { type Camelize } from "../types";
+
 export declare namespace Login {
   type Payload = {
     phoneNumber: string;
@@ -9,16 +11,7 @@ export declare namespace Login {
   type Response = GetUser.Response;
 }
 
-type UserData = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-  customerId: string;
-  activeVehicleId: string;
-};
+type UserData = Camelize<GetUser.UserData_Server>;
 
 export type CreateUserPayload = Omit<UserData, "id"> & {
   vehicleIds: string[];
@@ -32,6 +25,7 @@ export declare namespace GetUser {
     phone_number: string;
     email: string;
     password: string;
+    role: "admin" | null;
     customer_id: string;
     active_vehicle_id: string;
   };
