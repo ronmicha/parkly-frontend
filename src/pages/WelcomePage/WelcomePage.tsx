@@ -10,13 +10,13 @@ export const WelcomePage = () => {
     return null;
   }
 
-  const { userData } = getProfileResponse;
+  const { userData } = getProfileResponse!;
 
-  const handleUserClick = (): void => {
+  const navigateAsUser = (): void => {
     navigate(Paths.PARKING_LIST);
   };
 
-  const handleAdminClick = (): void => {
+  const navigateAsAdmin = (): void => {
     navigate(Paths.ADMIN);
   };
 
@@ -24,11 +24,13 @@ export const WelcomePage = () => {
     return (
       <>
         <h1>Hello, {userData.firstName}</h1>
-        <button onClick={handleUserClick}>User</button>
-        <button onClick={handleAdminClick}>Admin</button>
+        <button onClick={navigateAsUser}>User</button>
+        <button onClick={navigateAsAdmin}>Admin</button>
       </>
     );
   }
 
-  handleUserClick();
+  navigateAsUser();
+
+  return <></>;
 };

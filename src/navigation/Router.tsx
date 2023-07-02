@@ -1,8 +1,12 @@
+import { type ReactNode } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { routes } from "./routes";
-import { UnAuthRedirect } from "./UnAuthRedirect";
+import { type AppRoute } from "./routes";
 
-const Router = () => {
+type RouterProps = {
+  routes: AppRoute[];
+};
+
+const Router = ({ routes }: RouterProps) => {
   const pageRoutes = routes.map(({ path, element }, index) => {
     return <Route key={index} path={path} element={element} />;
   });
@@ -10,11 +14,16 @@ const Router = () => {
   return <Routes>{pageRoutes}</Routes>;
 };
 
-export const AppRouter = () => {
+type AppRouterProps = {
+  routes: AppRoute[];
+  renderComponents?: () => ReactNode;
+};
+
+export const AppRouter = ({ routes, renderComponents }: AppRouterProps) => {
   return (
     <BrowserRouter>
-      <Router />
-      <UnAuthRedirect />
+      <Router routes={routes} />
+      {renderComponents?.()}
     </BrowserRouter>
   );
 };

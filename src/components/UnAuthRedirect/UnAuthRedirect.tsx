@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { addResponseMiddleware } from "../api/service";
-import { Paths } from "./paths";
+import { addResponseMiddleware } from "../../api/service";
+import { Paths } from "../../navigation";
 
-export const UnAuthRedirect = (): JSX.Element => {
+export const UnAuthRedirect = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
