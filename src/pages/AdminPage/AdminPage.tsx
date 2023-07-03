@@ -1,7 +1,15 @@
-import { useGetCustomerUsers } from "../../api/domains";
+import { useGetCustomerUsers, useGetProfile } from "../../api/domains";
 
 export const AdminPage = () => {
-  const { data } = useGetCustomerUsers();
+  const { data: getProfileResponse, isLoading } = useGetProfile();
+  const { data } = useGetCustomerUsers(
+    { customerId: getProfileResponse?.userData.customerId ?? "" },
+    { enabled: Boolean(getProfileResponse) }
+  );
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <div>
@@ -13,7 +21,7 @@ export const AdminPage = () => {
           <th>Phone number</th>
           <th>Email</th>
           <th>Is admin?</th>
-          <th>Active vehicle ID</th>
+          <th>Vehicle IDs</th>
         </tr>
         {(data?.users ?? []).map((user) => (
           <tr key={user.id}>
@@ -22,7 +30,7 @@ export const AdminPage = () => {
             <td>{user.phoneNumber}</td>
             <td>{user.email}</td>
             <td>{user.role === "admin" ? "Yes" : "No"}</td>
-            <td>{user.activeVehicleId}</td>
+            <td>{user.vehicleIds.join(", ")}</td>
           </tr>
         ))}
       </table>
