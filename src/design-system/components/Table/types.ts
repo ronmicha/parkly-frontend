@@ -20,6 +20,7 @@ type InfiniteScrollProps = {
 };
 
 export type TableProps = {
+  className?: string;
   rows: TableRow[];
   headers: TableHeader[];
   onRowClick?: (rowId: ID) => void;
@@ -28,6 +29,4 @@ export type TableProps = {
   testId?: string;
   stickyHeader?: boolean;
   infiniteScrollProps?: InfiniteScrollProps;
-  className?: string;
-  monitoringActionAttribute?: string;
 };
