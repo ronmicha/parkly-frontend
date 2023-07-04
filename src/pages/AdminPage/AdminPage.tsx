@@ -1,15 +1,24 @@
 import { useGetCustomerUsers, useGetProfile } from "../../api/domains";
+import { Loading } from "../../design-system/components";
+
+const TableLoading: JSX.Element = (
+  <tr style={{ position: "relative" }}>
+    <div style={{ position: "absolute", left: "50%", top: "10px" }}>
+      <Loading />
+    </div>
+  </tr>
+);
 
 export const AdminPage = () => {
-  const { data: getProfileResponse, isLoading } = useGetProfile();
-  const { data } = useGetCustomerUsers(
+  const { data: getProfileResponse, isLoading: profileLoading } =
+    useGetProfile();
+
+  const { data, isLoading: customerUsersLoading } = useGetCustomerUsers(
     { customerId: getProfileResponse?.userData.customerId ?? "" },
     { enabled: Boolean(getProfileResponse) }
   );
 
-  if (isLoading) {
-    return null;
-  }
+  const isLoading = profileLoading || customerUsersLoading;
 
   return (
     <div>
@@ -23,7 +32,8 @@ export const AdminPage = () => {
           <th>Is admin?</th>
           <th>Vehicle IDs</th>
         </tr>
-        {(data?.users ?? []).map((user) => (
+        {isLoading && TableLoading}
+        {data?.users.map((user) => (
           <tr key={user.id}>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>

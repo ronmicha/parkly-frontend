@@ -7,10 +7,12 @@ export const UnAuthRedirect = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    addResponseMiddleware((response) => {
-      if (response.status === 401) {
-        navigate(Paths.LOGIN);
-      }
+    addResponseMiddleware({
+      onError: (error) => {
+        if (error.response?.status === 401) {
+          navigate(Paths.LOGIN);
+        }
+      },
     });
   }, [navigate]);
 

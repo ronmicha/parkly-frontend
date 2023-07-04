@@ -9,10 +9,16 @@ const instance = axios.create({
 });
 
 export const addResponseMiddleware = (middleware: ResponseMiddleware): void => {
-  instance.interceptors.response.use((config) => {
-    middleware(config);
-    return config;
-  });
+  instance.interceptors.response.use(
+    (response) => {
+      middleware.onSuccess?.(response);
+      return response;
+    },
+    async (error) => {
+      middleware.onError?.(error);
+      return await Promise.reject(error);
+    }
+  );
 };
 
 export const apiService = instance;
