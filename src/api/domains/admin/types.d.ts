@@ -1,9 +1,21 @@
-import { type GetUser, type UserData } from "../users";
+import { type GetUser } from "../users";
 import { type Camelize } from "../types";
 
-export type CreateUserPayload = Omit<UserData, "id"> & {
-  vehicleIds: string[];
-};
+export declare namespace CreateUser {
+  type Payload = Omit<GetCustomerUsers.CustomerUser, "id">;
+
+  type Response_Server = GetUser.Response_Server;
+
+  type Response = GetUser.Response;
+}
+
+export declare namespace UpdateUser {
+  type Payload = Partial<GetCustomerUsers.CustomerUser>;
+
+  type Response_Server = GetUser.Response_Server;
+
+  type Response = GetUser.Response;
+}
 
 export declare namespace GetCustomerUsers {
   type Params = {
@@ -12,8 +24,14 @@ export declare namespace GetCustomerUsers {
 
   type CustomerUser_Server = Pick<
     GetUser.UserData_Server,
-    "id" | "first_name" | "last_name" | "phone_number" | "email" | "role"
-  > & { vehicle_ids: string[] };
+    | "id"
+    | "first_name"
+    | "last_name"
+    | "phone_number"
+    | "email"
+    | "role"
+    | "customer_id"
+  > & { vehicle_ids: string[] | null };
 
   type CustomerUser = Camelize<CustomerUser_Server>;
 

@@ -4,6 +4,7 @@ export enum ApiEndpoints {
   UPDATE_SLOT_STATUS = "/parking-slots/update-status",
   LOGIN = "/users/login",
   PROFILE = "/users/me",
-  CREATE_USER = "/admin/create-user",
   CUSTOMER_USERS = "/admin/users",
+  CREATE_USER = "/admin/create-user",
+  UPDATE_USER = "/admin/update-user",
 }

@@ -5,9 +5,12 @@ import {
   useQuery,
   type UseQueryOptions,
 } from "@tanstack/react-query";
-import { createUser, getCustomerUsers } from "./api";
-import { type GetUser } from "../users";
-import { type CreateUserPayload, type GetCustomerUsers } from "./types";
+import { createUser, getCustomerUsers, updateUser } from "./api";
+import {
+  type CreateUser,
+  type GetCustomerUsers,
+  type UpdateUser,
+} from "./types";
 import { QueryKeys } from "../../queryClient";
 
 const transformCustomerUsers = (
@@ -21,6 +24,7 @@ const transformCustomerUsers = (
       email: serverUser.email,
       phoneNumber: serverUser.phone_number,
       role: serverUser.role,
+      customerId: serverUser.customer_id,
       vehicleIds: serverUser.vehicle_ids,
     })
   );
@@ -53,11 +57,27 @@ export const useGetCustomerUsers = (
 };
 
 export const useCreateUser = (
-  options: UseMutationOptions<GetUser.Response, unknown, CreateUserPayload> = {}
-): UseMutationResult<GetUser.Response, unknown, CreateUserPayload> => {
-  return useMutation<GetUser.Response, unknown, CreateUserPayload>({
+  options: UseMutationOptions<
+    CreateUser.Response,
+    unknown,
+    CreateUser.Payload
+  > = {}
+): UseMutationResult<CreateUser.Response, unknown, CreateUser.Payload> => {
+  return useMutation<CreateUser.Response, unknown, CreateUser.Payload>({
     ...options,
     mutationFn: createUser,
-    mutationKey: [QueryKeys.USER_DATA],
+  });
+};
+
+export const useUpdateUser = (
+  options: UseMutationOptions<
+    UpdateUser.Response,
+    unknown,
+    UpdateUser.Payload
+  > = {}
+): UseMutationResult<UpdateUser.Response, unknown, UpdateUser.Payload> => {
+  return useMutation<UpdateUser.Response, unknown, UpdateUser.Payload>({
+    ...options,
+    mutationFn: updateUser,
   });
 };

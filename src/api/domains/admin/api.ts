@@ -1,5 +1,8 @@
-import { type GetUser } from "../users";
-import { type CreateUserPayload, type GetCustomerUsers } from "./types";
+import {
+  type CreateUser,
+  type GetCustomerUsers,
+  type UpdateUser,
+} from "./types";
 import { ApiEndpoints, type ApiResponse, apiService } from "../../service";
 import { transformUserData } from "../utils";
 
@@ -17,12 +20,19 @@ export const getCustomerUsers = async (
 };
 
 export const createUser = async (
-  data: CreateUserPayload
-): Promise<GetUser.Response> => {
-  const response: ApiResponse<GetUser.Response_Server> = await apiService.post(
-    ApiEndpoints.CREATE_USER,
-    data
-  );
+  data: CreateUser.Payload
+): Promise<CreateUser.Response> => {
+  const response: ApiResponse<CreateUser.Response_Server> =
+    await apiService.post(ApiEndpoints.CREATE_USER, data);
+
+  return { userData: transformUserData(response.data.userData) };
+};
+
+export const updateUser = async (
+  data: UpdateUser.Payload
+): Promise<UpdateUser.Response> => {
+  const response: ApiResponse<UpdateUser.Response_Server> =
+    await apiService.post(ApiEndpoints.UPDATE_USER, data);
 
   return { userData: transformUserData(response.data.userData) };
 };

@@ -1,4 +1,4 @@
-export * from "./Admin";
+export * from "./Admin/UserManagement";
 export * from "./CustomerParkingArea";
 export * from "./LoginForm";
 export * from "./ParkingSlotList";

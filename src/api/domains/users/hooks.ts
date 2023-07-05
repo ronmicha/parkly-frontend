@@ -17,7 +17,6 @@ export const useLogin = (
   return useMutation<Login.Response, unknown, Login.Payload>({
     ...options,
     mutationFn: login,
-    mutationKey: [QueryKeys.USER_DATA],
   });
 };
 
@@ -28,7 +27,7 @@ export const useGetProfile = (
     GetUser.Response
   > = {}
 ): UseQueryResult<GetUser.Response> => {
-  const queryKey = [QueryKeys.USER_DATA];
+  const queryKey = [QueryKeys.ME];
 
   return useQuery<GetUser.Response_Server, unknown, GetUser.Response>(
     queryKey,
