@@ -23,7 +23,7 @@ export declare namespace GetUser {
     password: string;
     role: "admin" | null;
     customer_id: string;
-    active_vehicle_id: string;
+    active_vehicle_id: string | null;
   };
 
   type Response_Server = {
