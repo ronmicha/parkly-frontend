@@ -7,4 +7,5 @@ export enum ApiEndpoints {
   CUSTOMER_USERS = "/admin/users",
   CREATE_USER = "/admin/create-user",
   UPDATE_USER = "/admin/update-user",
+  DELETE_USERS = "/admin/delete-users",
 }

@@ -17,6 +17,12 @@ export declare namespace UpdateUser {
   type Response = GetUser.Response;
 }
 
+export declare namespace DeleteUsers {
+  type Payload = { userIds: Array<GetCustomerUsers.CustomerUser["id"]> };
+
+  type Response = unknown;
+}
+
 export declare namespace GetCustomerUsers {
   type Params = {
     customerId: string;

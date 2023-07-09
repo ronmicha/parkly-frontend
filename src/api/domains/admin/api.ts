@@ -1,5 +1,6 @@
 import {
   type CreateUser,
+  type DeleteUsers,
   type GetCustomerUsers,
   type UpdateUser,
 } from "./types";
@@ -35,4 +36,15 @@ export const updateUser = async (
     await apiService.post(ApiEndpoints.UPDATE_USER, data);
 
   return { userData: transformUserData(response.data.userData) };
+};
+
+export const deleteUsers = async (
+  data: DeleteUsers.Payload
+): Promise<DeleteUsers.Response> => {
+  const response: ApiResponse<DeleteUsers.Response> = await apiService.post(
+    ApiEndpoints.DELETE_USERS,
+    data
+  );
+
+  return response.data;
 };

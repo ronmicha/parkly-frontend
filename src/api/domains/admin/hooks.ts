@@ -5,9 +5,10 @@ import {
   useQuery,
   type UseQueryOptions,
 } from "@tanstack/react-query";
-import { createUser, getCustomerUsers, updateUser } from "./api";
+import { createUser, deleteUsers, getCustomerUsers, updateUser } from "./api";
 import {
   type CreateUser,
+  type DeleteUsers,
   type GetCustomerUsers,
   type UpdateUser,
 } from "./types";
@@ -79,5 +80,18 @@ export const useUpdateUser = (
   return useMutation<UpdateUser.Response, unknown, UpdateUser.Payload>({
     ...options,
     mutationFn: updateUser,
+  });
+};
+
+export const useDeleteUsers = (
+  options: UseMutationOptions<
+    DeleteUsers.Response,
+    unknown,
+    DeleteUsers.Payload
+  > = {}
+): UseMutationResult<DeleteUsers.Response, unknown, DeleteUsers.Payload> => {
+  return useMutation<DeleteUsers.Response, unknown, DeleteUsers.Payload>({
+    ...options,
+    mutationFn: deleteUsers,
   });
 };
