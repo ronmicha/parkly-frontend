@@ -6,12 +6,12 @@ type RouterProps = {
   routes: AppRoute[];
 };
 
-const Router = ({ routes }: RouterProps) => {
-  const pageRoutes = routes.map(({ path, element }, index) => {
-    return <Route key={index} path={path} element={element} />;
-  });
-
-  return <Routes>{pageRoutes}</Routes>;
+const createRoutes = ({ routes }: RouterProps) => {
+  return routes.map(({ path, element, index, routes }, i) => (
+    <Route key={i} path={path} index={Boolean(index)} element={element}>
+      {routes ? createRoutes({ routes }) : null}
+    </Route>
+  ));
 };
 
 type AppRouterProps = {
@@ -22,7 +22,7 @@ type AppRouterProps = {
 export const AppRouter = ({ routes, renderComponents }: AppRouterProps) => {
   return (
     <BrowserRouter>
-      <Router routes={routes} />
+      <Routes>{createRoutes({ routes })}</Routes>
       {renderComponents?.()}
     </BrowserRouter>
   );
