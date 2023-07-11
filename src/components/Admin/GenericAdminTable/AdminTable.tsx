@@ -28,7 +28,7 @@ type AdminTableProps = Pick<
 > & {
   setRowModesModel: Dispatch<SetStateAction<GridRowModesModel>>;
   onAddClick: () => void;
-  onDeleteClick: (selectedRowIds: DataGridProps["rowSelectionModel"]) => void;
+  onDeleteClick: (selectedRowIds: string[]) => void;
 };
 
 export const AdminTable = (props: AdminTableProps) => {
