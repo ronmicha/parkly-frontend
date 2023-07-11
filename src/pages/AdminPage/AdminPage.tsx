@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ParkingSlotsManagement, UserManagement } from "../../components/Admin";
+import { ParkingSlotManagement, UserManagement } from "../../components/Admin";
 
 type View = "users" | "slots";
 
@@ -23,7 +23,7 @@ export const AdminPage = () => {
         Slots
       </button>
       {currentView === "users" && <UserManagement />}
-      {currentView === "slots" && <ParkingSlotsManagement />}
+      {currentView === "slots" && <ParkingSlotManagement />}
     </>
   );
 };

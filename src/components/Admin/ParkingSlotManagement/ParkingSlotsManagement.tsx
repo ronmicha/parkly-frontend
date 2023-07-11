@@ -67,7 +67,10 @@ export const ParkingSlotManagement = () => {
     setRows((prevRows) => [...prevRows!, emptyParkingSlot]);
     setRowModesModel((prevModel) => ({
       ...prevModel,
-      [emptyParkingSlot.id]: { mode: GridRowModes.Edit, fieldToFocus: "fname" },
+      [emptyParkingSlot.id]: {
+        mode: GridRowModes.Edit,
+        fieldToFocus: "number",
+      },
     }));
   };
 
