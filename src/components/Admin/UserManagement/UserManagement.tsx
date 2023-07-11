@@ -1,16 +1,14 @@
+import { useEffect } from "react";
 import {
-  DataGrid,
   type GridColDef,
-  type GridEventListener,
-  GridRowEditStopReasons,
-  type GridRowId,
+  type GridRowModel,
   GridRowModes,
+  type GridRowsProp,
 } from "@mui/x-data-grid";
-import { TableToolbar, type ToolbarButtonProps } from "./TableToolbar";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useUserManagementData } from "./hooks";
-import { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
+import { type CreateUser } from "../../../api/domains";
+import { AdminTable, useAdminTableData } from "../GenericAdminTable";
+import { type TableRow, useUserManagementData } from "./useUserManagementData";
 
 const columns: GridColDef[] = [
   { field: "fname", headerName: "First name", editable: true, flex: 1 },
@@ -27,82 +25,95 @@ const columns: GridColDef[] = [
   { field: "vehicles", headerName: "Vehicle IDs", editable: true, flex: 1 },
 ];
 
+const createEmptyRow = (): TableRow => {
+  return {
+    id: uuid(),
+    fname: "",
+    lname: "",
+    phone: "",
+    email: "",
+    admin: false,
+    vehicles: "",
+    isNew: true,
+  };
+};
+
 export const UserManagement = () => {
-  const {
-    rows,
-    rowModesModel,
-    setRowModesModel,
-    isLoading,
-    handleRowEdit,
-    handleAddUserClick,
-    handleDeleteUsersClick,
-  } = useUserManagementData();
+  const { users, customerId, createUser, updateUser, deleteUsers, isLoading } =
+    useUserManagementData();
 
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+  const { rows, setRows, rowModesModel, setRowModesModel } =
+    useAdminTableData<TableRow>();
 
-  const addUserButtonProps: ToolbarButtonProps = {
-    label: "Add user",
-    onClick: handleAddUserClick,
-    startIcon: <AddIcon />,
-  };
+  useEffect(() => {
+    if (users) {
+      const rows: GridRowsProp<TableRow> = users.map((user) => ({
+        id: user.id,
+        fname: user.firstName,
+        lname: user.lastName,
+        phone: user.phoneNumber,
+        email: user.email,
+        admin: user.role === "admin",
+        vehicles: user.vehicleIds?.join(", "),
+      }));
 
-  const deleteUsersButtonProps: ToolbarButtonProps = {
-    label: "Delete",
-    onClick: () => {
-      handleDeleteUsersClick(selectedRowIds);
-    },
-    startIcon: <DeleteIcon />,
-  };
+      setRows(rows);
+    }
+  }, [users]);
 
-  const [toolbarButtons, setToolbarButtons] = useState<ToolbarButtonProps[]>([
-    addUserButtonProps,
-  ]);
+  const handleRowEdit = (newRow: GridRowModel<TableRow>) => {
+    const userData: CreateUser.Payload = {
+      firstName: newRow.fname,
+      lastName: newRow.lname,
+      phoneNumber: newRow.phone,
+      email: newRow.email,
+      role: newRow.admin ? "admin" : null,
+      customerId: customerId!,
+      vehicleIds: newRow.vehicles ? newRow.vehicles.split(", ") : null,
+    };
 
-  const handleRowEditStop: GridEventListener<"rowEditStop"> = (
-    params,
-    event
-  ) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
+    if (newRow.isNew) {
+      createUser(userData);
+    } else {
+      updateUser({ id: newRow.id, ...userData });
     }
 
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [params.id]: { mode: GridRowModes.View },
+    const updatedRow = { ...newRow, isNew: false };
+    setRows((prevRows) =>
+      prevRows!.map((row) => (row.id === newRow.id ? updatedRow : row))
+    );
+    return updatedRow;
+  };
+
+  const handleAddClick = (): void => {
+    const emptyUser = createEmptyRow();
+
+    setRows((prevRows) => [...prevRows!, emptyUser]);
+    setRowModesModel((prevModel) => ({
+      ...prevModel,
+      [emptyUser.id]: { mode: GridRowModes.Edit, fieldToFocus: "fname" },
     }));
   };
 
-  const handleRowSelection = (selectedRowIds: GridRowId[]): void => {
-    setSelectedRowIds(selectedRowIds as string[]);
+  const handleDeleteClick = (userIds: string[]): void => {
+    deleteUsers({ userIds });
+    setRows((prevRows) => prevRows!.filter((row) => !userIds.includes(row.id)));
   };
-
-  useEffect(() => {
-    if (selectedRowIds.length === 0) {
-      setToolbarButtons([addUserButtonProps]);
-    } else {
-      setToolbarButtons([addUserButtonProps, deleteUsersButtonProps]);
-    }
-  }, [selectedRowIds.length]);
 
   return (
     <>
       <h1 style={{ margin: "0", padding: "21px" }}>User Management</h1>
-      <DataGrid
-        style={{ height: "calc(100% - 91px)" }}
-        rows={rows ?? []}
+      <AdminTable
+        rows={rows}
         columns={columns}
-        editMode={"row"}
         rowModesModel={rowModesModel}
-        onRowModesModelChange={setRowModesModel}
-        onRowEditStop={handleRowEditStop}
+        setRowModesModel={setRowModesModel}
         processRowUpdate={handleRowEdit}
-        rowSelectionModel={selectedRowIds}
-        onRowSelectionModelChange={handleRowSelection}
         checkboxSelection
         disableRowSelectionOnClick
         loading={isLoading}
-        slots={{ toolbar: TableToolbar }}
-        slotProps={{ toolbar: { buttons: toolbarButtons } }}
+        onAddClick={handleAddClick}
+        onDeleteClick={handleDeleteClick}
       />
     </>
   );

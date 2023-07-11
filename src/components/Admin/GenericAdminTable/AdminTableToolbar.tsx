@@ -9,11 +9,11 @@ export type ToolbarButtonProps = {
   testId?: string;
 };
 
-type AddUserToolbarProps = {
+type AdminTableToolbarProps = {
   buttons: ToolbarButtonProps[];
 };
 
-export const TableToolbar = ({ buttons }: AddUserToolbarProps) => {
+export const AdminTableToolbar = ({ buttons }: AdminTableToolbarProps) => {
   return (
     <GridToolbarContainer>
       {buttons.map(({ label, onClick, startIcon, testId }) => (
