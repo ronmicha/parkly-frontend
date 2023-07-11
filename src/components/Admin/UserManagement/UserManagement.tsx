@@ -3,6 +3,7 @@ import {
   type GridColDef,
   type GridEventListener,
   GridRowEditStopReasons,
+  type GridRowId,
   GridRowModes,
 } from "@mui/x-data-grid";
 import { TableToolbar, type ToolbarButtonProps } from "./TableToolbar";
@@ -71,8 +72,8 @@ export const UserManagement = () => {
     }));
   };
 
-  const handleRowSelection = (selectedRowIds: string[]): void => {
-    setSelectedRowIds(selectedRowIds);
+  const handleRowSelection = (selectedRowIds: GridRowId[]): void => {
+    setSelectedRowIds(selectedRowIds as string[]);
   };
 
   useEffect(() => {
