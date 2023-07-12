@@ -5,7 +5,7 @@ import {
   type GenericRow,
 } from "../GenericAdminTable";
 import { type TableRow, useParkingSlotsData } from "./useParkingSlotsData";
-import { type ParkingSlot } from "../../../api/domains";
+import { type CreateParkingSlot, type ParkingSlot } from "../../../api/domains";
 
 const columns: GenericCol[] = [
   { field: "number", headerName: "Number", editable: true, flex: 1 },
@@ -35,7 +35,11 @@ export const ParkingSlotManagement = () => {
     useParkingSlotsData();
 
   const processRowUpdate = (newRow: GenericRow<TableRow>) => {
-    const slotData = {};
+    const slotData: CreateParkingSlot.Payload = {
+      slotNumber: parseInt(newRow.number),
+      slotFloor: parseInt(newRow.floor),
+      slotType: newRow.type,
+    };
 
     if (newRow.isNew) {
       createSlot(slotData);

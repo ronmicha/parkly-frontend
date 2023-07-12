@@ -1,7 +1,10 @@
 import {
+  useCreateParkingSlot,
+  useDeleteParkingSlot,
   useGetCustomerParkingAreas,
   useGetParkingSlots,
   useGetProfile,
+  useUpdateParkingSlot,
 } from "../../../api/domains";
 
 export type TableRow = {
@@ -32,14 +35,20 @@ export const useParkingSlotsData = () => {
       { enabled: Boolean(getParkingAreasResponse) }
     );
 
+  const { mutate: createSlot } = useCreateParkingSlot();
+
+  const { mutate: updateSlot } = useUpdateParkingSlot();
+
+  const { mutate: deleteSlots } = useDeleteParkingSlot();
+
   const isLoading =
     getProfileLoading || getParkingAreasLoading || getParkingSlotsLoading;
 
   return {
     parkingSlots: getParkingSlotsResponse?.parkingSlots,
-    createSlot: () => {},
-    updateSlot: () => {},
-    deleteSlots: () => {},
+    createSlot,
+    updateSlot,
+    deleteSlots,
     isLoading,
   };
 };

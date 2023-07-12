@@ -9,5 +9,7 @@ export enum ApiEndpoints {
   ADMIN_CREATE_USER = "/admin/users/create",
   ADMIN_UPDATE_USER = "/admin/users/update",
   ADMIN_DELETE_USERS = "/admin/users/delete",
-  ADMIN_PARKING_SLOTS = "/admin/parking-slots",
+  ADMIN_CREATE_SLOT = "/admin/parking-slots/create",
+  ADMIN_UPDATE_SLOT = "/admin/parking-slots/update",
+  ADMIN_DELETE_SLOTS = "/admin/parking-slots/delete",
 }

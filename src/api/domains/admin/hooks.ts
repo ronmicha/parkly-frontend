@@ -5,11 +5,22 @@ import {
   useQuery,
   type UseQueryOptions,
 } from "@tanstack/react-query";
-import { createUser, deleteUsers, getCustomerUsers, updateUser } from "./api";
 import {
+  createParkingSlot,
+  createUser,
+  deleteParkingSlots,
+  deleteUsers,
+  getCustomerUsers,
+  updateParkingSlot,
+  updateUser,
+} from "./api";
+import {
+  type CreateParkingSlot,
   type CreateUser,
+  type DeleteParkingSlots,
   type DeleteUsers,
   type GetCustomerUsers,
+  type UpdateParkingSlot,
   type UpdateUser,
 } from "./types";
 import { QueryKeys } from "../../queryClient";
@@ -57,6 +68,8 @@ export const useGetCustomerUsers = (
   );
 };
 
+// region users
+
 export const useCreateUser = (
   options: UseMutationOptions<
     CreateUser.Response,
@@ -95,3 +108,72 @@ export const useDeleteUsers = (
     mutationFn: deleteUsers,
   });
 };
+
+// endregion
+
+// region parking slots
+
+export const useCreateParkingSlot = (
+  options: UseMutationOptions<
+    CreateParkingSlot.Response,
+    unknown,
+    CreateParkingSlot.Payload
+  > = {}
+): UseMutationResult<
+  CreateParkingSlot.Response,
+  unknown,
+  CreateParkingSlot.Payload
+> => {
+  return useMutation<
+    CreateParkingSlot.Response,
+    unknown,
+    CreateParkingSlot.Payload
+  >({
+    ...options,
+    mutationFn: createParkingSlot,
+  });
+};
+
+export const useUpdateParkingSlot = (
+  options: UseMutationOptions<
+    UpdateParkingSlot.Response,
+    unknown,
+    UpdateParkingSlot.Payload
+  > = {}
+): UseMutationResult<
+  UpdateParkingSlot.Response,
+  unknown,
+  UpdateParkingSlot.Payload
+> => {
+  return useMutation<
+    UpdateParkingSlot.Response,
+    unknown,
+    UpdateParkingSlot.Payload
+  >({
+    ...options,
+    mutationFn: updateParkingSlot,
+  });
+};
+
+export const useDeleteParkingSlot = (
+  options: UseMutationOptions<
+    DeleteParkingSlots.Response,
+    unknown,
+    DeleteParkingSlots.Payload
+  > = {}
+): UseMutationResult<
+  DeleteParkingSlots.Response,
+  unknown,
+  DeleteParkingSlots.Payload
+> => {
+  return useMutation<
+    DeleteParkingSlots.Response,
+    unknown,
+    DeleteParkingSlots.Payload
+  >({
+    ...options,
+    mutationFn: deleteParkingSlots,
+  });
+};
+
+// endregion

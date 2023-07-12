@@ -1,11 +1,14 @@
 import {
+  type CreateParkingSlot,
   type CreateUser,
+  type DeleteParkingSlots,
   type DeleteUsers,
   type GetCustomerUsers,
+  type UpdateParkingSlot,
   type UpdateUser,
 } from "./types";
 import { ApiEndpoints, type ApiResponse, apiService } from "../../service";
-import { transformUserData } from "../utils";
+import { transformParkingSlot, transformUserData } from "../utils";
 
 export const getCustomerUsers = async (
   customerId: string
@@ -19,6 +22,8 @@ export const getCustomerUsers = async (
 
   return response.data;
 };
+
+// region users
 
 export const createUser = async (
   data: CreateUser.Payload
@@ -48,3 +53,36 @@ export const deleteUsers = async (
 
   return response.data;
 };
+
+// endregion
+
+// region parking slots
+
+export const createParkingSlot = async (
+  data: CreateParkingSlot.Payload
+): Promise<CreateParkingSlot.Response> => {
+  const response: ApiResponse<CreateParkingSlot.Response_Server> =
+    await apiService.post(ApiEndpoints.ADMIN_CREATE_SLOT, data);
+
+  return { slot: transformParkingSlot(response.data.slot) };
+};
+
+export const updateParkingSlot = async (
+  data: UpdateParkingSlot.Payload
+): Promise<UpdateParkingSlot.Response> => {
+  const response: ApiResponse<UpdateParkingSlot.Response_Server> =
+    await apiService.post(ApiEndpoints.ADMIN_UPDATE_SLOT, data);
+
+  return { slot: transformParkingSlot(response.data.slot) };
+};
+
+export const deleteParkingSlots = async (
+  data: DeleteParkingSlots.Payload
+): Promise<DeleteParkingSlots.Response> => {
+  const response: ApiResponse<DeleteParkingSlots.Response> =
+    await apiService.post(ApiEndpoints.ADMIN_DELETE_SLOTS, data);
+
+  return response.data;
+};
+
+// endregion

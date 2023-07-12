@@ -8,22 +8,9 @@ import {
   type UseQueryResult,
 } from "@tanstack/react-query";
 import { QueryKeys } from "../../queryClient";
+import { transformParkingSlot } from "../utils";
 import { getParkingSlots, updateSlotStatus } from "./api";
 import { type GetParkingSlots, type UpdateSlotStatusPayload } from "./types";
-
-const transformGetParkingSlotsResponse = (
-  response: GetParkingSlots.Response_Server
-): GetParkingSlots.Response => {
-  return {
-    parkingSlots: response.parkingSlots.map((ps) => ({
-      id: ps.id,
-      slotNumber: Number(ps.slot_number),
-      slotFloor: Number(ps.slot_floor),
-      slotType: ps.slot_type,
-      vehicleId: ps.vehicle_id,
-    })),
-  };
-};
 
 export const useGetParkingSlots = (
   params: GetParkingSlots.Params,
@@ -42,7 +29,12 @@ export const useGetParkingSlots = (
   >(
     [QueryKeys.PARKING_SLOTS, parkingAreaId],
     async () => await getParkingSlots(parkingAreaId),
-    { ...options, select: transformGetParkingSlotsResponse }
+    {
+      ...options,
+      select: (response) => ({
+        parkingSlots: response.parkingSlots.map(transformParkingSlot),
+      }),
+    }
   );
 };
 

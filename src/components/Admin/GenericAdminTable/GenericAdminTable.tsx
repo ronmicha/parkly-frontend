@@ -21,7 +21,7 @@ import {
   type GridValidRowModel,
 } from "@mui/x-data-grid/models/gridRows";
 
-export type GenericRow<R> = GridRowModel<R>;
+export type GenericRow<R extends GridValidRowModel> = GridRowModel<R>;
 
 export type GenericCol = GridColDef;
 

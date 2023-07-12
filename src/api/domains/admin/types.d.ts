@@ -1,27 +1,6 @@
 import { type GetUser } from "../users";
 import { type Camelize } from "../types";
-
-export declare namespace CreateUser {
-  type Payload = Omit<GetCustomerUsers.CustomerUser, "id">;
-
-  type Response_Server = GetUser.Response_Server;
-
-  type Response = GetUser.Response;
-}
-
-export declare namespace UpdateUser {
-  type Payload = Partial<GetCustomerUsers.CustomerUser>;
-
-  type Response_Server = GetUser.Response_Server;
-
-  type Response = GetUser.Response;
-}
-
-export declare namespace DeleteUsers {
-  type Payload = { userIds: Array<GetCustomerUsers.CustomerUser["id"]> };
-
-  type Response = unknown;
-}
+import { type GetParkingSlots, type ParkingSlot } from "../parkingSlots";
 
 export declare namespace GetCustomerUsers {
   type Params = {
@@ -49,3 +28,55 @@ export declare namespace GetCustomerUsers {
     users: CustomerUser[];
   };
 }
+
+// region users
+
+export declare namespace CreateUser {
+  type Payload = Omit<GetCustomerUsers.CustomerUser, "id">;
+
+  type Response_Server = GetUser.Response_Server;
+
+  type Response = GetUser.Response;
+}
+
+export declare namespace UpdateUser {
+  type Payload = Partial<GetCustomerUsers.CustomerUser>;
+
+  type Response_Server = GetUser.Response_Server;
+
+  type Response = GetUser.Response;
+}
+
+export declare namespace DeleteUsers {
+  type Payload = { userIds: Array<GetCustomerUsers.CustomerUser["id"]> };
+
+  type Response = unknown;
+}
+
+// endregion
+
+// region parking slots
+
+export declare namespace CreateParkingSlot {
+  type Payload = Omit<ParkingSlot, "id" | "vehicleId">;
+
+  type Response_Server = { slot: GetParkingSlots.ParkingSlot_Server };
+
+  type Response = { slot: ParkingSlot };
+}
+
+export declare namespace UpdateParkingSlot {
+  type Payload = Omit<ParkingSlot, "vehicleId">;
+
+  type Response_Server = { slot: GetParkingSlots.ParkingSlot_Server };
+
+  type Response = { slot: ParkingSlot };
+}
+
+export declare namespace DeleteParkingSlots {
+  type Payload = { slotIds: Array<ParkingSlot["id"]> };
+
+  type Response = unknown;
+}
+
+// endregion
