@@ -13,7 +13,9 @@ type AdminTableToolbarProps = {
   buttons: ToolbarButtonProps[];
 };
 
-export const AdminTableToolbar = ({ buttons }: AdminTableToolbarProps) => {
+export const GenericAdminTableToolbar = ({
+  buttons,
+}: AdminTableToolbarProps) => {
   return (
     <GridToolbarContainer>
       {buttons.map(({ label, onClick, startIcon, testId }) => (

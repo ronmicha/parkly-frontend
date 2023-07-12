@@ -1,16 +1,13 @@
-import { useEffect } from "react";
-import {
-  type GridColDef,
-  type GridRowModel,
-  GridRowModes,
-  type GridRowsProp,
-} from "@mui/x-data-grid";
 import { v4 as uuid } from "uuid";
-import { type CreateUser } from "../../../api/domains";
-import { AdminTable, useAdminTableData } from "../GenericAdminTable";
+import { type CreateUser, type GetCustomerUsers } from "../../../api/domains";
+import {
+  GenericAdminTable,
+  type GenericCol,
+  type GenericRow,
+} from "../GenericAdminTable";
 import { type TableRow, useUserManagementData } from "./useUserManagementData";
 
-const columns: GridColDef[] = [
+const columns: GenericCol[] = [
   { field: "fname", headerName: "First name", editable: true, flex: 1 },
   { field: "lname", headerName: "Last name", editable: true, flex: 1 },
   { field: "phone", headerName: "Phone number", editable: true, flex: 1 },
@@ -38,30 +35,21 @@ const createEmptyRow = (): TableRow => {
   };
 };
 
+const convertDataToRow = (user: GetCustomerUsers.CustomerUser): TableRow => ({
+  id: user.id,
+  fname: user.firstName,
+  lname: user.lastName,
+  phone: user.phoneNumber,
+  email: user.email,
+  admin: user.role === "admin",
+  vehicles: user.vehicleIds?.join(", "),
+});
+
 export const UserManagement = () => {
   const { users, customerId, createUser, updateUser, deleteUsers, isLoading } =
     useUserManagementData();
 
-  const { rows, setRows, rowModesModel, setRowModesModel } =
-    useAdminTableData<TableRow>();
-
-  useEffect(() => {
-    if (users) {
-      const rows: GridRowsProp<TableRow> = users.map((user) => ({
-        id: user.id,
-        fname: user.firstName,
-        lname: user.lastName,
-        phone: user.phoneNumber,
-        email: user.email,
-        admin: user.role === "admin",
-        vehicles: user.vehicleIds?.join(", "),
-      }));
-
-      setRows(rows);
-    }
-  }, [users]);
-
-  const handleRowEdit = (newRow: GridRowModel<TableRow>) => {
+  const processRowUpdate = (newRow: GenericRow<TableRow>) => {
     const userData: CreateUser.Payload = {
       firstName: newRow.fname,
       lastName: newRow.lname,
@@ -78,42 +66,24 @@ export const UserManagement = () => {
       updateUser({ id: newRow.id, ...userData });
     }
 
-    const updatedRow = { ...newRow, isNew: false };
-    setRows((prevRows) =>
-      prevRows!.map((row) => (row.id === newRow.id ? updatedRow : row))
-    );
-    return updatedRow;
+    return { ...newRow, isNew: false };
   };
 
-  const handleAddClick = (): void => {
-    const emptyUser = createEmptyRow();
-
-    setRows((prevRows) => [...prevRows!, emptyUser]);
-    setRowModesModel((prevModel) => ({
-      ...prevModel,
-      [emptyUser.id]: { mode: GridRowModes.Edit, fieldToFocus: "fname" },
-    }));
-  };
-
-  const handleDeleteClick = (userIds: string[]): void => {
+  const handleDelete = (userIds: string[]): void => {
     deleteUsers({ userIds });
-    setRows((prevRows) => prevRows!.filter((row) => !userIds.includes(row.id)));
   };
 
   return (
     <>
       <h1 style={{ margin: "0", padding: "21px" }}>User Management</h1>
-      <AdminTable
-        rows={rows}
+      <GenericAdminTable
+        data={users}
         columns={columns}
-        rowModesModel={rowModesModel}
-        setRowModesModel={setRowModesModel}
-        processRowUpdate={handleRowEdit}
-        checkboxSelection
-        disableRowSelectionOnClick
+        convertDataToRow={convertDataToRow}
+        createEmptyRow={createEmptyRow}
+        processRowUpdate={processRowUpdate}
+        onDelete={handleDelete}
         loading={isLoading}
-        onAddClick={handleAddClick}
-        onDeleteClick={handleDeleteClick}
       />
     </>
   );
