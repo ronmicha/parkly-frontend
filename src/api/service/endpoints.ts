@@ -1,5 +1,5 @@
 export enum ApiEndpoints {
-  LOGIN = "/users/login",
+  LOGIN = "/login",
   PROFILE = "/users/me",
   PARKING_AREAS = "/parking-areas",
   PARKING_SLOTS = "/parking-slots",
