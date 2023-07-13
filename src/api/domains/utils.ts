@@ -23,5 +23,6 @@ export const transformParkingSlot = (
   slotNumber: slot.slot_number,
   slotFloor: slot.slot_floor,
   slotType: slot.slot_type,
+  parkingAreaId: slot.parking_area_id,
   vehicleId: slot.vehicle_id,
 });

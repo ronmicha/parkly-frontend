@@ -1,9 +1,6 @@
-type ParkingArea = Omit<
-  GetCustomerParkingAreas.ParkingArea_Server,
-  "street_address"
-> & {
-  streetAddress: string;
-};
+import { type Camelize } from "../types";
+
+type ParkingArea = Camelize<GetCustomerParkingAreas.ParkingArea_Server>;
 
 export declare namespace GetCustomerParkingAreas {
   type Params = {

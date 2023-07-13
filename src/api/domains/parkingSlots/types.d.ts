@@ -1,15 +1,13 @@
+import { type Camelize } from "../types";
+import { type ParkingArea } from "../parkingAreas";
+
 enum SlotType {
   Single = "single",
   Blocked = "blocked",
   Blocking = "blocking",
 }
 
-type ParkingSlot = Pick<GetParkingSlots.ParkingSlot_Server, "id"> & {
-  slotNumber: number;
-  slotFloor: number;
-  slotType: SlotType;
-  vehicleId: string | null;
-};
+type ParkingSlot = Camelize<GetParkingSlots.ParkingSlot_Server>;
 
 export declare namespace GetParkingSlots {
   type Params = {
@@ -21,6 +19,7 @@ export declare namespace GetParkingSlots {
     slot_number: number;
     slot_floor: number;
     slot_type: SlotType;
+    parking_area_id: ParkingArea["id"];
     vehicle_id: string | null;
   };
 

@@ -105,6 +105,7 @@ export const GenericAdminTable = <Data, Row extends GridValidRowModel>(
     setRows((prevRows) =>
       prevRows!.map((row) => (row.id === newRow.id ? updatedRow : row))
     );
+
     return updatedRow;
   };
 

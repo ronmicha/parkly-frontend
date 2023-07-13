@@ -49,6 +49,7 @@ export const useParkingSlotsData = () => {
     createSlot,
     updateSlot,
     deleteSlots,
+    parkingAreaId,
     isLoading,
   };
 };

@@ -31,14 +31,21 @@ const convertDataToRow = (slot: ParkingSlot): TableRow => ({
 });
 
 export const ParkingSlotManagement = () => {
-  const { parkingSlots, createSlot, updateSlot, deleteSlots, isLoading } =
-    useParkingSlotsData();
+  const {
+    parkingSlots,
+    createSlot,
+    updateSlot,
+    deleteSlots,
+    parkingAreaId,
+    isLoading,
+  } = useParkingSlotsData();
 
   const processRowUpdate = (newRow: GenericRow<TableRow>) => {
     const slotData: CreateParkingSlot.Payload = {
       slotNumber: parseInt(newRow.number),
       slotFloor: parseInt(newRow.floor),
-      slotType: newRow.type,
+      parkingAreaId: parkingAreaId!,
+      slotType: null, // ToDo
     };
 
     if (newRow.isNew) {
