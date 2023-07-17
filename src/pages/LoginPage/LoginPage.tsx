@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box } from "../../design-system/components";
 import { useLogin } from "../../api/domains";
 import { LoginForm, type LoginFormData } from "../../components";
 import { Paths } from "../../navigation";
@@ -22,7 +23,7 @@ export const LoginPage = () => {
   useEffect(() => {
     const isLoggedIn = browserStorage.isLoggedIn.get();
     if (isLoggedIn) {
-      onLoginSuccess();
+      // onLoginSuccess();
     }
   }, []);
 
@@ -31,8 +32,17 @@ export const LoginPage = () => {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: 1,
+        width: 1,
+      }}
+    >
       <LoginForm onSubmit={handleLogin} />
-    </>
+    </Box>
   );
 };
