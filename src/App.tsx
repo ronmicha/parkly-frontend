@@ -1,3 +1,4 @@
+import { ThemeProvider } from "./design-system/theme";
 import { QueryClientProvider } from "./api/queryClient";
 import { AppRouter } from "./navigation";
 import { routes } from "./navigation/routes";
@@ -10,7 +11,9 @@ const renderComponents = () => {
 const App = () => {
   return (
     <QueryClientProvider>
-      <AppRouter routes={routes} renderComponents={renderComponents} />
+      <ThemeProvider>
+        <AppRouter routes={routes} renderComponents={renderComponents} />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

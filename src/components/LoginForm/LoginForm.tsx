@@ -1,7 +1,12 @@
 import { type FormEvent } from "react";
 import { useForm } from "../../hooks";
-import { Box, Button, Input, Typography } from "../../design-system/components";
-import { type SxProps } from "@mui/system";
+import {
+  Box,
+  Button,
+  Input,
+  Stack,
+  Typography,
+} from "../../design-system/components";
 
 type LoginFormProps = {
   onSubmit: (formData: LoginFormData) => void;
@@ -16,11 +21,6 @@ const initialFormData: LoginFormData = {
   password: "",
 };
 
-const sx: SxProps = {
-  marginBlockEnd: 2,
-  width: 1,
-};
-
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const { formData, handleInputChange } = useForm(initialFormData);
 
@@ -30,35 +30,31 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   };
 
   return (
-    <Box sx={{ width: 0.7 }}>
-      <Typography variant={"h4"} sx={{ marginBlockEnd: 2 }}>
-        Login to Parkly
-      </Typography>
-      <form>
-        <Input
-          sx={sx}
-          name={"phoneNumber"}
-          placeholder={"Phone number"}
-          value={formData.phoneNumber}
-          onChange={handleInputChange}
-        />
-        <Input
-          sx={sx}
-          name={"password"}
-          placeholder={"Password"}
-          type={"password"}
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          onClick={handleSubmit}
-          sx={{ ...sx, height: 0.25 }}
-        >
-          Login
-        </Button>
-      </form>
+    <Box sx={{ p: 5 }}>
+      <Stack gap={2}>
+        <Typography variant={"h4"}>Login to Parkly</Typography>
+        <form>
+          <Stack gap={2}>
+            <Input
+              name={"phoneNumber"}
+              label={"Phone number"}
+              type={"number"}
+              value={formData.phoneNumber}
+              onChange={handleInputChange}
+            />
+            <Input
+              name={"password"}
+              label={"Password"}
+              type={"password"}
+              value={formData.password}
+              onChange={handleInputChange}
+            />
+            <Button type="submit" variant="contained" onClick={handleSubmit}>
+              Login
+            </Button>
+          </Stack>
+        </form>
+      </Stack>
     </Box>
   );
 };
