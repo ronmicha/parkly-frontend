@@ -4,15 +4,13 @@ import { AppRouter } from "./navigation";
 import { routes } from "./navigation/routes";
 import { UnAuthRedirect } from "./components";
 
-const renderComponents = () => {
-  return <UnAuthRedirect />;
-};
-
 const App = () => {
   return (
     <QueryClientProvider>
       <ThemeProvider>
-        <AppRouter routes={routes} renderComponents={renderComponents} />
+        <AppRouter routes={routes}>
+          <UnAuthRedirect />
+        </AppRouter>
       </ThemeProvider>
     </QueryClientProvider>
   );

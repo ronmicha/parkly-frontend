@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type PropsWithChildren } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { type AppRoute } from "./routes";
 
@@ -10,16 +10,15 @@ const createRoutes = (routes: AppRoute[]) => {
   ));
 };
 
-type AppRouterProps = {
+type AppRouterProps = PropsWithChildren<{
   routes: AppRoute[];
-  renderComponents?: () => ReactNode;
-};
+}>;
 
-export const AppRouter = ({ routes, renderComponents }: AppRouterProps) => {
+export const AppRouter = ({ routes, children }: AppRouterProps) => {
   return (
     <BrowserRouter>
       <Routes>{createRoutes(routes)}</Routes>
-      {renderComponents?.()}
+      {children}
     </BrowserRouter>
   );
 };

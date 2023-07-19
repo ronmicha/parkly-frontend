@@ -12,9 +12,12 @@ type ThemeProviderProps = PropsWithChildren<{
   mode?: PaletteMode;
 }>;
 
-export const ThemeProvider = ({ children, mode }: ThemeProviderProps) => {
+export const ThemeProvider = ({
+  children,
+  mode = "light",
+}: ThemeProviderProps) => {
   const theme = useMemo(() => {
-    const themeOptions = createThemeOptions(mode);
+    const themeOptions = createThemeOptions(mode!);
     const theme = createTheme(themeOptions);
     return responsiveFontSizes(theme);
   }, [mode]);

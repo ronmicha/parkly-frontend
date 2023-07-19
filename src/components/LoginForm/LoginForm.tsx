@@ -7,6 +7,7 @@ import {
   Stack,
   Typography,
 } from "../../design-system/components";
+import { InputAdornment } from "@mui/material";
 
 type LoginFormProps = {
   onSubmit: (formData: LoginFormData) => void;
@@ -30,17 +31,27 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   };
 
   return (
-    <Box sx={{ p: 5 }}>
-      <Stack gap={2}>
-        <Typography variant={"h4"}>Login to Parkly</Typography>
+    <Box sx={{ width: 0.8 }}>
+      <Stack gap={5}>
+        <Typography variant={"h4"} sx={{ fontWeight: "fontWeightBold" }}>
+          Login to Parkly
+        </Typography>
         <form>
-          <Stack gap={2}>
+          <Stack gap={0}>
             <Input
               name={"phoneNumber"}
-              label={"Phone number"}
+              label={"Enter your phone number"}
               type={"number"}
               value={formData.phoneNumber}
               onChange={handleInputChange}
+              helperText={" "}
+              variant={"filled"}
+              InputProps={{
+                disableUnderline: true,
+                startAdornment: (
+                  <InputAdornment position="start">+972</InputAdornment>
+                ),
+              }}
             />
             <Input
               name={"password"}
@@ -48,8 +59,17 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
               type={"password"}
               value={formData.password}
               onChange={handleInputChange}
+              helperText={" "}
+              variant={"filled"}
+              InputProps={{ disableUnderline: true }}
+              InputLabelProps={{ shrink: true }}
             />
-            <Button type="submit" variant="contained" onClick={handleSubmit}>
+            <Button
+              sx={{ p: 2 }}
+              type="submit"
+              variant="contained"
+              onClick={handleSubmit}
+            >
               Login
             </Button>
           </Stack>

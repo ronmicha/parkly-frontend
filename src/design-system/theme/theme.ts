@@ -1,8 +1,6 @@
 import { type PaletteMode, type ThemeOptions } from "@mui/material";
 
-export const createThemeOptions = (
-  mode: PaletteMode = "light"
-): ThemeOptions => {
+export const createThemeOptions = (mode: PaletteMode): ThemeOptions => {
   return {
     palette: {
       mode,
