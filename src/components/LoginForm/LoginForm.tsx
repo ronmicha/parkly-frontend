@@ -1,4 +1,4 @@
-import { type FormEvent } from "react";
+import { type ChangeEvent, type FormEvent } from "react";
 import { useForm } from "../../hooks";
 import {
   Box,
@@ -22,8 +22,18 @@ const initialFormData: LoginFormData = {
   password: "",
 };
 
+const PHONE_INPUT_MAX_LENGTH = 9;
+
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const { formData, handleInputChange } = useForm(initialFormData);
+
+  const handlePhoneInputChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    if (event.target.value.length <= PHONE_INPUT_MAX_LENGTH) {
+      handleInputChange(event);
+    }
+  };
 
   const handleSubmit = (event: FormEvent<HTMLButtonElement>): void => {
     onSubmit(formData);
@@ -43,7 +53,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
               label={"Enter your phone number"}
               type={"number"}
               value={formData.phoneNumber}
-              onChange={handleInputChange}
+              onChange={handlePhoneInputChange}
               helperText={" "}
               variant={"filled"}
               InputProps={{
