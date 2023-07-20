@@ -1,5 +1,4 @@
-import { type ChangeEvent, type FormEvent } from "react";
-import { useForm } from "../../hooks";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 import {
   Box,
   Button,
@@ -23,20 +22,25 @@ const initialFormData: LoginFormData = {
 };
 
 const PHONE_INPUT_MAX_LENGTH = 9;
+const PHONE_PREFIX = "+972";
 
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {
-  const { formData, handleInputChange } = useForm(initialFormData);
+  const [formData, setFormData] = useState<LoginFormData>(initialFormData);
 
-  const handlePhoneInputChange = (
-    event: ChangeEvent<HTMLInputElement>
-  ): void => {
-    if (event.target.value.length <= PHONE_INPUT_MAX_LENGTH) {
-      handleInputChange(event);
-    }
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (event: FormEvent<HTMLButtonElement>): void => {
-    onSubmit(formData);
+    const updatedFormData: LoginFormData = {
+      ...formData,
+      phoneNumber: `${PHONE_PREFIX}${formData.phoneNumber}`,
+    };
+    onSubmit(updatedFormData);
     event.preventDefault();
   };
 
@@ -52,14 +56,17 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
               name={"phoneNumber"}
               label={"Enter your phone number"}
               type={"number"}
+              inputMode={"tel"}
               value={formData.phoneNumber}
-              onChange={handlePhoneInputChange}
+              onChange={handleInputChange}
               helperText={" "}
               variant={"filled"}
               InputProps={{
                 disableUnderline: true,
                 startAdornment: (
-                  <InputAdornment position="start">+972</InputAdornment>
+                  <InputAdornment position="start">
+                    {PHONE_PREFIX}
+                  </InputAdornment>
                 ),
               }}
             />
