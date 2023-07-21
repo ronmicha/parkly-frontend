@@ -9,6 +9,8 @@ import {
   type GridRowModel,
   GridRowModes,
   type GridRowModesModel,
+  type GridRowsProp,
+  type GridValidRowModel,
 } from "@mui/x-data-grid";
 import {
   GenericAdminTableToolbar,
@@ -16,10 +18,6 @@ import {
 } from "./GenericAdminTableToolbar";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  type GridRowsProp,
-  type GridValidRowModel,
-} from "@mui/x-data-grid/models/gridRows";
 
 export type GenericRow<R extends GridValidRowModel> = GridRowModel<R>;
 

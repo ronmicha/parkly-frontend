@@ -1,31 +1,44 @@
-import { type ChangeEvent, type FormEvent, useState } from "react";
+import { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 import {
   Box,
   Button,
   Input,
+  InputAdornment,
   Stack,
   Typography,
 } from "../../design-system/components";
-import { InputAdornment } from "@mui/material";
+
+const PHONE_PREFIX = "+972";
+const PHONE_REGEX = /^\d{9}$/;
+
+enum InputNames {
+  Phone = "phoneNumber",
+  Password = "password",
+}
+
+export type LoginFormData = {
+  [InputNames.Phone]: string;
+  [InputNames.Password]: string;
+};
+
+const initialFormData: LoginFormData = {
+  [InputNames.Phone]: "",
+  [InputNames.Password]: "",
+};
 
 type LoginFormProps = {
   onSubmit: (formData: LoginFormData) => void;
 };
-export type LoginFormData = {
-  phoneNumber: string;
-  password: string;
-};
-
-const initialFormData: LoginFormData = {
-  phoneNumber: "",
-  password: "",
-};
-
-const PHONE_INPUT_MAX_LENGTH = 9;
-const PHONE_PREFIX = "+972";
 
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const [formData, setFormData] = useState<LoginFormData>(initialFormData);
+  const [validPhoneNumber, setValidPhoneNumber] = useState<boolean>(true);
+
+  const { phoneNumber, password } = formData;
+
+  useEffect(() => {
+    setValidPhoneNumber(true);
+  }, [phoneNumber]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
@@ -36,12 +49,18 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   };
 
   const handleSubmit = (event: FormEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
+    if (!PHONE_REGEX.test(phoneNumber)) {
+      setValidPhoneNumber(false);
+      return;
+    }
+
     const updatedFormData: LoginFormData = {
-      ...formData,
-      phoneNumber: `${PHONE_PREFIX}${formData.phoneNumber}`,
+      [InputNames.Phone]: `${PHONE_PREFIX}${phoneNumber}`,
+      [InputNames.Password]: password,
     };
     onSubmit(updatedFormData);
-    event.preventDefault();
   };
 
   return (
@@ -51,16 +70,17 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
           Login to Parkly
         </Typography>
         <form>
-          <Stack gap={0}>
+          <Stack gap={2}>
             <Input
-              name={"phoneNumber"}
-              label={"Enter your phone number"}
+              name={InputNames.Phone}
+              value={phoneNumber}
+              onChange={handleInputChange}
               type={"number"}
               inputMode={"tel"}
-              value={formData.phoneNumber}
-              onChange={handleInputChange}
-              helperText={" "}
+              label={"Enter your phone number"}
               variant={"filled"}
+              error={!validPhoneNumber}
+              helperText={validPhoneNumber ? " " : "Invalid phone number"}
               InputProps={{
                 disableUnderline: true,
                 startAdornment: (
@@ -71,13 +91,13 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
               }}
             />
             <Input
-              name={"password"}
-              label={"Password"}
-              type={"password"}
-              value={formData.password}
+              name={InputNames.Password}
+              value={password}
               onChange={handleInputChange}
-              helperText={" "}
+              type={"password"}
+              label={"Password"}
               variant={"filled"}
+              helperText={" "}
               InputProps={{ disableUnderline: true }}
               InputLabelProps={{ shrink: true }}
             />

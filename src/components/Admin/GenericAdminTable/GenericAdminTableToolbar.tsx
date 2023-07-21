@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { GridToolbarContainer } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import { Button } from "../../../design-system/components";
 
 export type ToolbarButtonProps = {
   label: string;
