@@ -5,10 +5,20 @@ import { routes } from "./navigation/routes";
 import { UnAuthRedirect } from "./components";
 import { useEffect } from "react";
 
-const App = () => {
+const useRemoveSplashScreen = () => {
   useEffect(() => {
-    document.getElementById("splash-screen")?.remove();
+    const splashScreenEl = document.getElementById("splash-screen");
+    if (splashScreenEl) {
+      splashScreenEl.style.opacity = "0";
+      splashScreenEl.ontransitionend = () => {
+        splashScreenEl.remove();
+      };
+    }
   }, []);
+};
+
+const App = () => {
+  useRemoveSplashScreen();
 
   return (
     <QueryClientProvider>
