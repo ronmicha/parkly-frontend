@@ -1,7 +1,7 @@
 import { type Camelize } from "../types";
 import { type ParkingArea } from "../parkingAreas";
 
-enum SlotType {
+export enum SlotType {
   Single = "single",
   Blocked = "blocked",
   Blocking = "blocking",

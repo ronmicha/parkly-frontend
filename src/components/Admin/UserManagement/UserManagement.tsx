@@ -74,17 +74,15 @@ export const UserManagement = () => {
   };
 
   return (
-    <>
-      <h1 style={{ margin: "0", padding: "21px" }}>User Management</h1>
-      <GenericAdminTable
-        data={users}
-        columns={columns}
-        convertDataToRow={convertDataToRow}
-        createEmptyRow={createEmptyRow}
-        processRowUpdate={processRowUpdate}
-        onDelete={handleDelete}
-        loading={isLoading}
-      />
-    </>
+    <GenericAdminTable
+      title={"User Management"}
+      data={users}
+      columns={columns}
+      convertDataToRow={convertDataToRow}
+      createEmptyRow={createEmptyRow}
+      processRowUpdate={processRowUpdate}
+      onDelete={handleDelete}
+      loading={isLoading}
+    />
   );
 };

@@ -13,7 +13,7 @@ export const LoginPage = () => {
     navigate(Paths.WELCOME);
   };
 
-  const { mutate: login } = useLogin({
+  const { mutate: login, isError } = useLogin({
     onSuccess: () => {
       browserStorage.isLoggedIn.set("true");
       onLoginSuccess();
@@ -42,7 +42,7 @@ export const LoginPage = () => {
         width: 1,
       }}
     >
-      <LoginForm onSubmit={handleLogin} />
+      <LoginForm onSubmit={handleLogin} loginError={isError} />
     </Box>
   );
 };

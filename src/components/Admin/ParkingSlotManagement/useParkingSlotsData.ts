@@ -9,8 +9,8 @@ import {
 
 export type TableRow = {
   id: string;
-  number: string;
-  floor: string;
+  number: number;
+  floor: number;
   type: string;
   isNew?: boolean;
 };

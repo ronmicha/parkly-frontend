@@ -5,19 +5,30 @@ import {
   type GenericRow,
 } from "../GenericAdminTable";
 import { type TableRow, useParkingSlotsData } from "./useParkingSlotsData";
-import { type CreateParkingSlot, type ParkingSlot } from "../../../api/domains";
+import {
+  type CreateParkingSlot,
+  type ParkingSlot,
+  SlotType,
+} from "../../../api/domains";
 
 const columns: GenericCol[] = [
   { field: "number", headerName: "Number", editable: true, flex: 1 },
   { field: "floor", headerName: "Floor", editable: true, flex: 1 },
-  { field: "type", headerName: "Type", editable: true, flex: 1 },
+  {
+    field: "type",
+    headerName: "Type",
+    editable: true,
+    flex: 1,
+    type: "singleSelect",
+    valueOptions: ["single", "double"],
+  },
 ];
 
 const createEmptyRow = (): TableRow => {
   return {
     id: uuid(),
-    number: "",
-    floor: "",
+    number: NaN,
+    floor: NaN,
     type: "",
     isNew: true,
   };
@@ -25,10 +36,22 @@ const createEmptyRow = (): TableRow => {
 
 const convertDataToRow = (slot: ParkingSlot): TableRow => ({
   id: slot.id,
-  number: `${slot.slotNumber}`,
-  floor: `${slot.slotFloor}`,
-  type: slot.slotType,
+  number: slot.slotNumber,
+  floor: slot.slotFloor,
+  type: slot.slotType === SlotType.Single ? "single" : "double",
 });
+
+const calculateDoubleSlotType = (
+  slotNumber: ParkingSlot["slotNumber"],
+  allSlots: ParkingSlot[]
+): SlotType => {
+  for (const slot of allSlots) {
+    if (slot.slotNumber === slotNumber - 1) {
+      return SlotType.Blocked;
+    }
+  }
+  return SlotType.Blocking;
+};
 
 export const ParkingSlotManagement = () => {
   const {
@@ -42,10 +65,13 @@ export const ParkingSlotManagement = () => {
 
   const processRowUpdate = (newRow: GenericRow<TableRow>) => {
     const slotData: CreateParkingSlot.Payload = {
-      slotNumber: parseInt(newRow.number),
-      slotFloor: parseInt(newRow.floor),
+      slotNumber: newRow.number,
+      slotFloor: newRow.floor,
       parkingAreaId: parkingAreaId!,
-      slotType: null, // ToDo
+      slotType:
+        newRow.type === "single"
+          ? SlotType.Single
+          : calculateDoubleSlotType(newRow.number, parkingSlots!),
     };
 
     if (newRow.isNew) {
@@ -62,17 +88,15 @@ export const ParkingSlotManagement = () => {
   };
 
   return (
-    <>
-      <h1 style={{ margin: "0", padding: "21px" }}>Parking Slot Management</h1>
-      <GenericAdminTable
-        data={parkingSlots}
-        columns={columns}
-        convertDataToRow={convertDataToRow}
-        createEmptyRow={createEmptyRow}
-        processRowUpdate={processRowUpdate}
-        onDelete={handleDelete}
-        loading={isLoading}
-      />
-    </>
+    <GenericAdminTable
+      title={"Parking Slot Management"}
+      data={parkingSlots}
+      columns={columns}
+      convertDataToRow={convertDataToRow}
+      createEmptyRow={createEmptyRow}
+      processRowUpdate={processRowUpdate}
+      onDelete={handleDelete}
+      loading={isLoading}
+    />
   );
 };

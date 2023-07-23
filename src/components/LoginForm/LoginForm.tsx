@@ -28,9 +28,10 @@ const initialFormData: LoginFormData = {
 
 type LoginFormProps = {
   onSubmit: (formData: LoginFormData) => void;
+  loginError: boolean;
 };
 
-export const LoginForm = ({ onSubmit }: LoginFormProps) => {
+export const LoginForm = ({ onSubmit, loginError }: LoginFormProps) => {
   const [formData, setFormData] = useState<LoginFormData>(initialFormData);
   const [validPhoneNumber, setValidPhoneNumber] = useState<boolean>(true);
 
@@ -109,6 +110,9 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
             >
               Login
             </Button>
+            <Typography variant={"subtitle2"} sx={{ color: "error.main" }}>
+              {loginError ? "Phone or password are incorrect" : " "}
+            </Typography>
           </Stack>
         </form>
       </Stack>

@@ -18,6 +18,7 @@ import {
 } from "./GenericAdminTableToolbar";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Typography } from "../../../design-system/components";
 
 export type GenericRow<R extends GridValidRowModel> = GridRowModel<R>;
 
@@ -32,6 +33,7 @@ type AdminTableProps<Data, Row> = Pick<
   | "disableRowSelectionOnClick"
   | "loading"
 > & {
+  title: string;
   data?: Data[];
   convertDataToRow: (data: Data) => Row;
   createEmptyRow: () => Row;
@@ -52,6 +54,7 @@ export const GenericAdminTable = <Data, Row extends GridValidRowModel>(
     checkboxSelection = true,
     disableRowSelectionOnClick = true,
     loading,
+    title,
   } = props;
 
   const [rows, setRows] = useState<GridRowsProp<Row>>([]);
@@ -140,23 +143,27 @@ export const GenericAdminTable = <Data, Row extends GridValidRowModel>(
   };
 
   return (
-    <DataGrid
-      style={{ height: "calc(100% - 91px)" }}
-      className={className}
-      rows={rows}
-      columns={columns}
-      editMode={"row"}
-      processRowUpdate={handleProcessRowUpdate}
-      rowSelectionModel={selectedRowIds}
-      onRowSelectionModelChange={handleRowSelection}
-      rowModesModel={rowModesModel}
-      onRowModesModelChange={setRowModesModel}
-      onRowEditStop={handleRowEditStop}
-      checkboxSelection={checkboxSelection}
-      disableRowSelectionOnClick={disableRowSelectionOnClick}
-      loading={loading}
-      slots={{ toolbar: GenericAdminTableToolbar }}
-      slotProps={{ toolbar: { buttons: toolbarButtons } }}
-    />
+    <>
+      <Typography variant={"h3"} sx={{ p: 2 }}>
+        {title}
+      </Typography>
+      <DataGrid
+        className={className}
+        rows={rows}
+        columns={columns}
+        editMode={"row"}
+        processRowUpdate={handleProcessRowUpdate}
+        rowSelectionModel={selectedRowIds}
+        onRowSelectionModelChange={handleRowSelection}
+        rowModesModel={rowModesModel}
+        onRowModesModelChange={setRowModesModel}
+        onRowEditStop={handleRowEditStop}
+        checkboxSelection={checkboxSelection}
+        disableRowSelectionOnClick={disableRowSelectionOnClick}
+        loading={loading}
+        slots={{ toolbar: GenericAdminTableToolbar }}
+        slotProps={{ toolbar: { buttons: toolbarButtons } }}
+      />
+    </>
   );
 };
