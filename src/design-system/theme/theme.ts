@@ -1,6 +1,6 @@
-import { type PaletteMode, type ThemeOptions } from "@mui/material";
+import { type PaletteMode } from "@mui/material";
 
-export const createThemeOptions = (mode: PaletteMode): ThemeOptions => {
+export const createThemeOptions = (mode: PaletteMode) => {
   return {
     palette: {
       mode,
