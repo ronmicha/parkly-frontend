@@ -2,11 +2,11 @@ import { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 import {
   Box,
   Button,
-  Input,
   InputAdornment,
   Stack,
   Typography,
 } from "../../design-system/components";
+import { LoginFormInput } from "./LoginFormInput";
 
 const PHONE_PREFIX = "+972";
 const PHONE_REGEX = /^\d{9}$/;
@@ -65,25 +65,23 @@ export const LoginForm = ({ onSubmit, loginError }: LoginFormProps) => {
   };
 
   return (
-    <Box sx={{ width: 0.8 }}>
+    <Box sx={{ width: 0.67 }}>
       <Stack gap={5}>
         <Typography variant={"h4"} sx={{ fontWeight: "fontWeightBold" }}>
           Login to Parkly
         </Typography>
-        <form>
-          <Stack gap={2}>
-            <Input
+        <Box component={"form"}>
+          <Stack gap={1}>
+            <LoginFormInput
               name={InputNames.Phone}
               value={phoneNumber}
               onChange={handleInputChange}
+              header={"Enter your phone number"}
               type={"number"}
-              inputMode={"tel"}
-              label={"Enter your phone number"}
-              variant={"filled"}
               error={!validPhoneNumber}
               helperText={validPhoneNumber ? " " : "Invalid phone number"}
+              inputProps={{ inputMode: "tel", pattern: "^\\d{9}$" }}
               InputProps={{
-                disableUnderline: true,
                 startAdornment: (
                   <InputAdornment position="start">
                     {PHONE_PREFIX}
@@ -91,16 +89,13 @@ export const LoginForm = ({ onSubmit, loginError }: LoginFormProps) => {
                 ),
               }}
             />
-            <Input
+            <LoginFormInput
               name={InputNames.Password}
               value={password}
               onChange={handleInputChange}
+              header={"Enter password"}
               type={"password"}
-              label={"Password"}
-              variant={"filled"}
               helperText={" "}
-              InputProps={{ disableUnderline: true }}
-              InputLabelProps={{ shrink: true }}
             />
             <Button
               sx={{ p: 2 }}
@@ -114,7 +109,7 @@ export const LoginForm = ({ onSubmit, loginError }: LoginFormProps) => {
               {loginError ? "Phone or password are incorrect" : " "}
             </Typography>
           </Stack>
-        </form>
+        </Box>
       </Stack>
     </Box>
   );

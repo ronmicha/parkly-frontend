@@ -1,0 +1,1 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a06802c3-6534-4692-865f-53de5859b3fe/deploy-status)](https://app.netlify.com/sites/parkly-app/deploys)
