@@ -21,7 +21,12 @@ export const LoginFormInput = (props: LoginFormInputProps) => {
       <InputLabel htmlFor={restProps.name} sx={{ mx: 1, mb: 1 }}>
         {header}
       </InputLabel>
-      <Input sx={{ width: "100%" }} id={restProps.name} {...restProps} />
+      <Input
+        id={restProps.name}
+        sx={{ width: "100%" }}
+        inputProps={{ ...restProps.inputProps, style: { height: "13px" } }}
+        {...restProps}
+      />
     </Stack>
   );
 };
