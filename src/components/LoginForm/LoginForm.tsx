@@ -80,7 +80,6 @@ export const LoginForm = ({ onSubmit, loginError }: LoginFormProps) => {
               type={"number"}
               error={!validPhoneNumber}
               helperText={validPhoneNumber ? " " : "Invalid phone number"}
-              inputProps={{ inputMode: "tel", pattern: "^\\d{9}$" }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -98,7 +97,7 @@ export const LoginForm = ({ onSubmit, loginError }: LoginFormProps) => {
               helperText={" "}
             />
             <Button
-              sx={{ p: 2 }}
+              sx={{ p: 1.34 }}
               type="submit"
               variant="contained"
               onClick={handleSubmit}
