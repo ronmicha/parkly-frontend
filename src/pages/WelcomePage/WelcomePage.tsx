@@ -1,9 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { useGetProfile } from "../../api/domains";
-import { Paths } from "../../navigation";
+import { Paths, useRouter } from "../../navigation";
 
 export const WelcomePage = () => {
-  const navigate = useNavigate();
+  const { navigate } = useRouter();
   const { data: getProfileResponse, isLoading } = useGetProfile();
 
   if (isLoading) {

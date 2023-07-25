@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box } from "../../design-system/components";
 import { useLogin } from "../../api/domains";
 import { LoginForm, type LoginFormData } from "../../components";
-import { Paths } from "../../navigation";
+import { Paths, useRouter } from "../../navigation";
 import { browserStorage } from "../../packages/browserStorage";
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
+  const { navigate } = useRouter();
 
   const onLoginSuccess = (): void => {
     navigate(Paths.WELCOME);

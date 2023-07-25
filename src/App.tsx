@@ -1,7 +1,7 @@
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "./design-system/theme";
 import { QueryClientProvider } from "./api/queryClient";
 import { AppRouter, routes } from "./navigation";
-import { UnAuthRedirect } from "./components";
 import { useRemoveSplashScreen } from "./hooks";
 
 const App = () => {
@@ -10,9 +10,9 @@ const App = () => {
   return (
     <QueryClientProvider>
       <ThemeProvider>
-        <AppRouter routes={routes}>
-          <UnAuthRedirect />
-        </AppRouter>
+        <BrowserRouter>
+          <AppRouter routes={routes} />
+        </BrowserRouter>
       </ThemeProvider>
     </QueryClientProvider>
   );
