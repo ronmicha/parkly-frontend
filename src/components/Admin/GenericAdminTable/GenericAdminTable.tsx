@@ -42,7 +42,7 @@ type AdminTableProps<Data, Row> = Pick<
 
 export const GenericAdminTable = <Data, Row extends GridValidRowModel>(
   props: AdminTableProps<Data, Row>
-) => {
+): JSX.Element => {
   const {
     className,
     data,
